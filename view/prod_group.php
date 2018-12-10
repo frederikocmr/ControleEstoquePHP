@@ -152,6 +152,7 @@ if (!isLoggedIn()) {
                     <h2>Cadastrar Grupo de Produto</h2>
                 </header>
                 <form class="w3-container">
+                    <br>
                     <p>
                         <label for="name">Nome</label>
                         <input class="w3-input"  type="text" name="name" id="name">
@@ -233,12 +234,16 @@ if (!isLoggedIn()) {
                                 });
 
                                 function editarDados(id) {
-
+                                    //implementar função que faz post em ajax para o prod_group_controller 
+                                    // semelhante ao cadastro acima...
+                                    
                                     console.log(id);
                                 }
 
                                 function removerDados(id) {
-
+                                    //implementar função que faz post em ajax para o prod_group_controller 
+                                    // semelhante ao cadastro acima...
+                                    
                                     console.log(id);
                                 }
 

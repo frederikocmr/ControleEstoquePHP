@@ -1293,11 +1293,11 @@
          **/
         labels: {
             all: "All",
-            infos: "Showing {{ctx.start}} to {{ctx.end}} of {{ctx.total}} entries",
-            loading: "Loading...",
-            noResults: "No results found!",
-            refresh: "Refresh",
-            search: "Search"
+            infos: "Mostrando {{ctx.start}} de {{ctx.end}} até {{ctx.total}} registros",
+            loading: "Carregando...",
+            noResults: "Nenhum resultado encontrado!",
+            refresh: "Atualizar",
+            search: "Procurar"
         },
 
         /**
