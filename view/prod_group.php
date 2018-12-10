@@ -229,6 +229,8 @@ if (!isLoggedIn()) {
                                             $('#name').val('');
                                             $('#description').val('');
                                             alert(response);
+                                            
+                                            $('button[title=Atualizar]').click();
                                         }
                                     });
                                 });
@@ -236,13 +238,51 @@ if (!isLoggedIn()) {
                                 function editarDados(id) {
                                     //implementar função que faz post em ajax para o prod_group_controller 
                                     // semelhante ao cadastro acima...
-                                    
+                                    var name = $('#name').val();
+                                    var description = $('#description').val();
+                                    $.ajax({
+                                        url: '../controller/prod_group_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'edit': 1,
+                                            'name': name,
+                                            'description': description,
+                                            'id': id,
+                                        },
+                                        success: function (response) {
+   
+                                            $('#name').val('');
+                                            $('#description').val('');
+                                            $('#id').val('');
+                                            alert(response);
+                                            
+                                            $('button[title=Atualizar]').click();
+                                        }
+                                    });
+
                                     console.log(id);
                                 }
 
                                 function removerDados(id) {
                                     //implementar função que faz post em ajax para o prod_group_controller 
                                     // semelhante ao cadastro acima...
+                                    
+                                    $(document).on('click', '#submit_exc', function () {
+                                    var id = $('#id').val();
+                                    $.ajax({
+                                        url: '../controller/prod_group_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'save': 1,
+                                            'id': id
+                                        },
+                                        success: function (response) {
+                                            $('#id').val('');
+                                            alert(response);
+                                            $('button[title=Atualizar]').click();
+                                        }
+                                    });
+                                });
                                     
                                     console.log(id);
                                 }

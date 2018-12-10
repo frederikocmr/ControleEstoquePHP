@@ -38,3 +38,37 @@ function saveProdGroup() {
     }
     exit();
 }
+function editProdGroup() {
+    global $prodGroupDAO, $errors;
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+
+
+    if (isset($name) && isset($description) && isset($id)) {
+
+        $id = $prodGroupDAO->editProdGroupProdGroup($name,$description,$id );
+ 
+        $retorno = ($id >= 1 ? "Editado com sucesso!" : "Erro ao editar !");
+        echo $retorno;
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+    exit();
+}
+function deleteProdGroup() {
+    global $prodGroupDAO, $errors;
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+
+
+    if (isset($id)) {
+
+        $id = $prodGroupDAO->deleteProdGroup($id);
+ 
+        $retorno = ($id >= 1 ? "Deletado com sucesso!" : "Erro ao deletar!");
+        echo $retorno;
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+    exit();
+}

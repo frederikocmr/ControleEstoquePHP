@@ -23,13 +23,30 @@ class ProdGroupDAO extends Dbconnect {
         $sele = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
         return $sele;
     }
-
+    
+    //insere dados
     public function insertProdGroup($name, $description) {
 
         $query = "INSERT INTO grupo_produto (nome, descricao) VALUES ('{$name}', '{$description}')";
 
         mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return mysqli_insert_id($this->conn);
+    }
+    //edita dados
+    public function editProdGroup($name, $description, $id) {
+
+        $query = "UPDATE  grupo_produto SET nome = '$name', descricao = '$description' WHERE id = '$id'";
+
+        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return true;
+    }
+    //deleta dados
+    public function deleteProdGroup($id) {
+
+        $query = "DELETE FROM  grupo_produto WHERE id = '$id'";
+        
+        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return true;
     }
 
     public function getProdGroup($dados_) {
@@ -91,5 +108,5 @@ class ProdGroupDAO extends Dbconnect {
         
         return $output;
     }
-
+    
 }
