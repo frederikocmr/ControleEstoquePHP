@@ -95,3 +95,7 @@ form, .content {
     display: block;
     clear: both;
 }
+
+.input-group {
+    z-index: -1 !important;
+}

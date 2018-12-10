@@ -1,8 +1,7 @@
 <?php
 include("../dao/user_dao.php");
 include('../controller/user_controller.php');
-include("../dao/prod_group_dao.php");
-include('../controller/prod_group_controller.php');
+
 
 if (!isLoggedIn()) {
     $_SESSION['msg'] = "É necessário logar primeiro!";
@@ -113,7 +112,7 @@ if (!isLoggedIn()) {
                                     <h2 class="w3-text-theme" style="text-shadow:1px 1px 0 #444">Grupo de Produtos</h2>
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
-                                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%"><i class="fa fa-book"></i> Visualizar</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" ><i class="fa fa-book"></i> Visualizar</button>
                                         <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" onclick="document.getElementById('id01').style.display = 'block'"><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
@@ -124,45 +123,15 @@ if (!isLoggedIn()) {
 
                     <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
-                        <div class="w3-row">
-                            <div class="w3-col s9 w3-center"> 
-                                <input placeholder="Digite aqui para pesquisar" class="w3-input w3-animate-input" type="text" style="width:30%">
-                            </div>
-                            <div class="w3-col s3 w3-center">
-                                <button type="button" class="w3-btn w3-theme"><i class="fa fa-search"></i>  Pesquisar</button>
-                            </div>
-                        </div>
-
-                        <span class="w3-right w3-opacity"></span>
-                        <hr class="w3-clear">
-                        <table class="w3-table-all">
+                        <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all" id="display_area">
                             <thead>
                                 <tr class="w3-theme-d1 w3-hover-text-theme">
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Points</th>
+                                    <th data-column-id="id" data-type="numeric">ID</th>
+                                    <th data-column-id="nome">Nome</th>
+                                    <th data-column-id="descricao" data-order="desc">Descrição</th>
+                                    <th data-column-id="option" data-formatter="option" data-sortable="false">Opções</th>
                                 </tr>
                             </thead>
-                            <tr class="w3-hover-theme">
-                                <td>Jill</td>
-                                <td>Smith</td>
-                                <td> <button class="w3-button w3-circle w3-theme-d5 ">+</button></td>
-                            </tr>
-                            <tr class="w3-hover-theme">
-                                <td>Eve</td>
-                                <td>Jackson</td>
-                                <td>94</td>
-                            </tr>
-                            <tr class="w3-hover-theme">
-                                <td>Adam</td>
-                                <td>Johnson</td>
-                                <td>67</td>
-                            </tr>
-                            <tr class="w3-hover-theme">
-                                <td>Bo</td>
-                                <td>Nilson</td>
-                                <td>35</td>
-                            </tr>
                         </table>
                         <hr class="w3-clear">
                     </div>
@@ -187,7 +156,7 @@ if (!isLoggedIn()) {
                         <label for="name">Nome</label>
                         <input class="w3-input"  type="text" name="name" id="name">
                     </p>     
-                     <p>
+                    <p>
                         <label for="name">Descrição</label>
                         <input class="w3-input"  type="text" name="description" id="description">
                     </p>  
@@ -206,85 +175,74 @@ if (!isLoggedIn()) {
             <p >Criado por Anna Lara e Frederiko Cesar</p>
         </footer>
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="../util/js/jquery-3.3.1.min.js"></script>
+        <script src="../util/js/bootstrap.min.js"></script>
+        <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
+        <script src="../util/bootgrid/jquery.bootgrid.min.js"></script>
+
         <script >
-            $(document).ready(function () {
-                // save comment to database
-                $(document).on('click', '#submit_btn', function () {
-                    var name = $('#name').val();
-                    var description = $('#description').val();
-                    $.ajax({
-                        url: '../controller/prod_group_controller.php',
-                        type: 'POST',
-                        data: {
-                            'save': 1,
-                            'name': name,
-                            'description': description,
-                        },
-                        success: function (response) {
-                            console.log(response);
-                            $('#name').val('');
-                            $('#description').val('');
-                            //$('#display_area').append(response);
-                        }
-                    });
-                });
-                // delete from database
-//                $(document).on('click', '.delete', function () {
-//                    var id = $(this).data('id');
-//                    $clicked_btn = $(this);
-//                    $.ajax({
-//                        url: 'server.php',
-//                        type: 'GET',
-//                        data: {
-//                            'delete': 1,
-//                            'id': id,
-//                        },
-//                        success: function (response) {
-//                            // remove the deleted comment
-//                            $clicked_btn.parent().remove();
-//                            $('#name').val('');
-//                            $('#comment').val('');
-//                        }
-//                    });
-//                });
-//                var edit_id;
-//                var $edit_comment;
-//                $(document).on('click', '.edit', function () {
-//                    edit_id = $(this).data('id');
-//                    $edit_comment = $(this).parent();
-//                    // grab the comment to be editted
-//                    var name = $(this).siblings('.display_name').text();
-//                    var comment = $(this).siblings('.comment_text').text();
-//                    // place comment in form
-//                    $('#name').val(name);
-//                    $('#comment').val(comment);
-//                    $('#submit_btn').hide();
-//                    $('#update_btn').show();
-//                });
-//                $(document).on('click', '#update_btn', function () {
-//                    var id = edit_id;
-//                    var name = $('#name').val();
-//                    var comment = $('#comment').val();
-//                    $.ajax({
-//                        url: 'server.php',
-//                        type: 'POST',
-//                        data: {
-//                            'update': 1,
-//                            'id': id,
-//                            'name': name,
-//                            'comment': comment,
-//                        },
-//                        success: function (response) {
-//                            $('#name').val('');
-//                            $('#comment').val('');
-//                            $('#submit_btn').show();
-//                            $('#update_btn').hide();
-//                            $edit_comment.replaceWith(response);
-//                        }
-//                    });
-//                });
-            });
+                            $(document).ready(function () {
+
+                                var grid = $("#grid-data").bootgrid({
+                                    ajax: true,
+                                    post: function ()
+                                    {
+                                        /* To accumulate custom parameter with the request object */
+                                        return {
+                                            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+                                        };
+                                    },
+                                    url: "../controller/prod_group_controller.php",
+                                    formatters: {
+                                        "option": function (column, row)
+                                        {
+                                            return "<button type=\"button\" class=\"btn btn-xs btn-default option-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " +
+                                                    "<button type=\"button\" class=\"btn btn-xs btn-default option-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                                        }
+                                    }
+                                }).on("loaded.rs.jquery.bootgrid", function ()
+                                {
+                                    /* Executes after data is loaded and rendered */
+                                    grid.find(".option-edit").on("click", function (e) {
+                                        editarDados($(this).data("row-id"));
+                                    }).end().find(".option-delete").on("click", function (e) {
+                                        removerDados($(this).data("row-id"));
+                                    });
+                                });
+
+                                // save comment to database
+                                $(document).on('click', '#submit_btn', function () {
+                                    var name = $('#name').val();
+                                    var description = $('#description').val();
+                                    $.ajax({
+                                        url: '../controller/prod_group_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'save': 1,
+                                            'name': name,
+                                            'description': description,
+                                        },
+                                        success: function (response) {
+
+                                            $('#name').val('');
+                                            $('#description').val('');
+                                            alert(response);
+                                        }
+                                    });
+                                });
+
+                                function editarDados(id) {
+
+                                    console.log(id);
+                                }
+
+                                function removerDados(id) {
+
+                                    console.log(id);
+                                }
+
+                            });
         </script>
     </body>
 
