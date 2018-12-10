@@ -24,8 +24,8 @@ if (!isLoggedIn()) {
         <div class="w3-top">
             <div class="w3-bar w3-theme-d2 w3-left-align w3-large" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
-                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
+                <a href="home.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
+                <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
                 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
                 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
                 <div class="w3-dropdown-hover w3-hide-small">
@@ -77,7 +77,7 @@ if (!isLoggedIn()) {
 
 
                     <!-- Notificações  -->
-                    <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+                    <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
@@ -106,112 +106,51 @@ if (!isLoggedIn()) {
 
                     <div class="w3-row-padding">
                         <div class="w3-col m12">
-                            <div class="w3-card w3-round w3-white">
-                                <div class="w3-container w3-padding">
-                                    <div class="w3-bar">
-                                    <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%"><i class="fa fa-book"></i> Visualizar</button>
-                                    <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%"><i class="fa fa-plus-square"></i> Cadastrar</button>
-                                  </div>
+                            <div class="w3-row-padding">
+                                <div class="w3-third w3-container w3-margin-bottom "  >
+                                    <img src="../util/images/boxes.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover" >
+                                    <div class="w3-container w3-white w3-theme-shadow" >
+                                        <p><b>Grupos de Produtos</b></p>
+                                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                    </div>
+                                </div>
+                                <div class="w3-third w3-container w3-margin-bottom">
+                                    <img src="../util/images/boxes2.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover">
+                                    
+                                    <div class="w3-container w3-white w3-theme-shadow">
+                                        <p><b>Produtos</b></p>
+                                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                    </div>
+                                </div>
+                                <div class="w3-third w3-container">
+                                    <img src="../util/images/boxes4.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover">
+                                    <div class="w3-container w3-white w3-theme-shadow">
+                                        <p><b>Movimentação</b></p>
+                                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
-                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-
-                        <div class="w3-row">
-                            <div class="w3-col s9 w3-center"> 
-                                <input placeholder="Digite aqui para pesquisar" class="w3-input w3-animate-input" type="text" style="width:30%">
-                            </div>
-                            <div class="w3-col s3 w3-center">
-                                <button type="button" class="w3-button w3-theme"><i class="fa fa-search"></i>  Pesquisar</button>
-                            </div>
-                        </div>
-
-                        <span class="w3-right w3-opacity"></span>
-                        <hr class="w3-clear">
-                        <table class="w3-table-all">
-                            <thead>
-                                <tr class="w3-theme-d3 w3-hover-text-theme">
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Points</th>
-                                </tr>
-                            </thead>
-                            <tr class="w3-hover-theme">
-                                <td>Jill</td>
-                                <td>Smith</td>
-                                <td> <button class="w3-button w3-circle w3-theme-d5 ">+</button></td>
-                            </tr>
-                            <tr class="w3-hover-theme">
-                                <td>Eve</td>
-                                <td>Jackson</td>
-                                <td>94</td>
-                            </tr>
-                            <tr class="w3-hover-theme">
-                                <td>Adam</td>
-                                <td>Johnson</td>
-                                <td>67</td>
-                            </tr>
-                            <tr class="w3-hover-theme">
-                                <td>Bo</td>
-                                <td>Nilson</td>
-                                <td>35</td>
-                            </tr>
-                        </table>
-                        <hr>
-                    </div>
-
-
-                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-                        <img src="../util/images/avatar6.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                        <span class="w3-right w3-opacity">32 min</span>
-                        <h4>Angie Jane</h4><br>
-                        <hr class="w3-clear">
-                        <p>Have you seen this?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
-                        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
-                    </div> 
-
-                    <!-- End Middle Column -->
                 </div>
-
-
-                <!-- End Grid -->
+                <!-- End Middle Column -->
             </div>
 
-            <!-- End Page Container -->
-        </div>
-        <br>
 
+            <!-- End Grid -->
+        </div>
+
+        <br>
+        <hr class="w3-clear">
+        <br>
+        <hr class="w3-clear">
         <footer class="w3-container w3-theme-d5">
             <p>Criado por Anna Lara e Frederiko Cesar</p>
         </footer>
 
         <script>
-            // Accordion
-            function myFunction(id) {
-                var x = document.getElementById(id);
-                if (x.className.indexOf("w3-show") == -1) {
-                    x.className += " w3-show";
-                    x.previousElementSibling.className += " w3-theme-d1";
-                } else {
-                    x.className = x.className.replace("w3-show", "");
-                    x.previousElementSibling.className =
-                            x.previousElementSibling.className.replace(" w3-theme-d1", "");
-                }
-            }
 
-            // Used to toggle the menu on smaller screens when clicking on the menu button
-            function openNav() {
-                var x = document.getElementById("navDemo");
-                if (x.className.indexOf("w3-show") == -1) {
-                    x.className += " w3-show";
-                } else {
-                    x.className = x.className.replace(" w3-show", "");
-                }
-            }
         </script>
 
     </body>
