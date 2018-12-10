@@ -40,7 +40,7 @@ if (!isAdmin()) {
 
             <!-- Info do usuário logado -->
             <div class="profile_info">
-                <img src="../util/images/admin_profile.png" alt="usuario" >
+                <img src="../util/images/avatar1.png" alt="usuario" >
 
                 <div>
                     <?php if (isset($_SESSION['user'])) : ?>
