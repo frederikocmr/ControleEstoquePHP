@@ -196,7 +196,7 @@ if (!isLoggedIn()) {
                 <footer class="w3-container w3-theme-l1">
                     <div class="w3-bar">
                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="document.getElementById('id01').style.display = 'none'" ><i class="fa fa-mail-reply"></i> Cancelar</button>
-                        <button class="w3-bar-item w3-button w3-theme-d1" id="submit_btn"><i class="fa fa-check"></i> Cadastrar</button>
+                        <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="submit_btn"><i class="fa fa-check"></i> Cadastrar</button>
                     </div>
                 </footer>
             </div>
