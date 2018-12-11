@@ -28,10 +28,11 @@ if (!isLoggedIn()) {
         <div class="w3-top">
             <div class="w3-bar w3-theme-d2 w3-left-align w3-large" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-                <a href="home.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
-                <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cubes"></i></a>
-                <a href="prod.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
-                <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
+                <a href="home_user.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
+                <?php if (isAdmin()) { ?>
+                    <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
+                    <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
+                <?php } ?>                <a href="prod.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
                 <a href="mov.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Movimentação"><i class="fa fa-mail-forward"></i></a>
                 <a href="home_user.php?logout='1'" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="SAIR">
                     <i class="fa fa-sign-out"></i> SAIR
@@ -67,6 +68,10 @@ if (!isLoggedIn()) {
                                     </small>
                                 </p>
                                 <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i> <?php echo ($_SESSION['user']['email']); ?></p>
+                                <?php if (isAdmin()) { ?>
+                                    <p><i class="fa fa-user-secret fa-fw w3-margin-right w3-text-theme"></i> <a href="home.php">Painel ADMIN</a></p>
+
+                                <?php } ?>
                             </div>
                         </div>
                     <?php endif ?>
@@ -133,7 +138,7 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </div>
-      
+
         </div>
         <br>
 
@@ -146,14 +151,14 @@ if (!isLoggedIn()) {
                 </header>
                 <form class="w3-container">
                     <br>
-                        <label for="id_produto">Produto</label>
-                        <select class="w3-input"   name="id_produto" id="id_produto">
+                    <label for="id_produto">Produto</label>
+                    <select class="w3-input"   name="id_produto" id="id_produto">
 
-                        </select>
-                        <label for="id_secao">Seção</label>
-                        <select class="w3-input"   name="id_secao" id="id_secao">
+                    </select>
+                    <label for="id_secao">Seção</label>
+                    <select class="w3-input"   name="id_secao" id="id_secao">
 
-                        </select>
+                    </select>
                     </p>  
                     <br>
                 </form>
@@ -166,9 +171,9 @@ if (!isLoggedIn()) {
             </div>
         </div>
 
-<!--        <footer class="w3-container w3-theme-d5">
-            <p >Criado por Anna Lara e Frederiko Cesar</p>
-        </footer>-->
+        <!--        <footer class="w3-container w3-theme-d5">
+                    <p >Criado por Anna Lara e Frederiko Cesar</p>
+                </footer>-->
 
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>
@@ -232,7 +237,7 @@ if (!isLoggedIn()) {
                                 });
 
                                 function editarDados(id) {
-                                     $.ajax({
+                                    $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
@@ -250,7 +255,7 @@ if (!isLoggedIn()) {
                                 }
 
                                 function removerDados(id) {
-                                   $.ajax({
+                                    $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {

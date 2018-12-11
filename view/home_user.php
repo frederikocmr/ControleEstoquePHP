@@ -25,10 +25,12 @@ if (!isLoggedIn()) {
         <div class="w3-top">
             <div class="w3-bar w3-theme-d2 w3-left-align w3-large" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-                <a href="home.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
-                <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
+                <a href="home_user.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
                 <a href="prod.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
-                <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
+                <?php if (isAdmin()) { ?>
+                    <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
+                    <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
+                <?php } ?>
                 <a href="mov.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Movimentação"><i class="fa fa-mail-forward"></i></a>
                 <a href="home_user.php?logout='1'" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="SAIR">
                     <i class="fa fa-sign-out"></i> SAIR
@@ -65,6 +67,10 @@ if (!isLoggedIn()) {
                                     </small>
                                 </p>
                                 <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i> <?php echo ($_SESSION['user']['email']); ?></p>
+                                <?php if (isAdmin()) { ?>
+                                <p><i class="fa fa-user-secret fa-fw w3-margin-right w3-text-theme"></i> <a href="home.php">Painel ADMIN</a></p>
+                                  
+                                <?php } ?>
                             </div>
                         </div>
                     <?php endif ?>
@@ -102,16 +108,20 @@ if (!isLoggedIn()) {
                     <div class="w3-row-padding">
                         <div class="w3-col m12">
                             <div class="w3-row-padding">
-                                <div class="w3-third w3-container w3-margin-bottom w3-animate-right "  >
-                                    <a href="prod_group.php"><img src="../util/images/boxes.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover" ></a>
-                                    <div class="w3-container w3-white w3-theme-shadow" >
-                                        <p><b>Grupos de Produtos</b></p>
-                                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+
+                                <?php if (isAdmin()) { ?>
+                                    <div class="w3-third w3-container w3-margin-bottom w3-animate-right "  >
+                                        <a href="prod_group.php"><img src="../util/images/boxes.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover" ></a>
+                                        <div class="w3-container w3-white w3-theme-shadow" >
+                                            <p><b>Grupos de Produtos</b></p>
+                                            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                        </div>
                                     </div>
-                                </div>
+
+                                <?php } ?>
                                 <div class="w3-third w3-container w3-margin-bottom w3-animate-right">
                                     <a href="prod.php"><img src="../util/images/boxes2.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover"></a>
-                                    
+
                                     <div class="w3-container w3-white w3-theme-shadow">
                                         <p><b>Produtos</b></p>
                                         <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
