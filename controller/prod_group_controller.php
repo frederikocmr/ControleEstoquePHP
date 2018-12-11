@@ -21,6 +21,10 @@ if (isset($_POST['get_edit_values'])){
     getProdGroupById();
 }
 
+if (isset($_POST['edit'])){
+    editProdGroup();
+}
+
 function getProdGroup(){
     global $prodGroupDAO;
     $output = $prodGroupDAO->getProdGroup($_POST);
@@ -43,7 +47,7 @@ function saveProdGroup() {
 
         $id = $prodGroupDAO->insertProdGroup($name,$description );
  
-        $retorno = ($id >= 1 ? "Cadastrado com sucesso!" : "Erro ao cadastrar!");
+        $retorno = ($id >= 1 ? "Item $name cadastrado com sucesso!" : "Erro ao cadastrar!");
         echo $retorno;
     } 
     exit();
@@ -53,13 +57,13 @@ function editProdGroup() {
     global $prodGroupDAO;
     $name = $_POST['name'];
     $description = $_POST['description'];
-
+    $id = $_POST['id'];
 
     if (isset($name) && isset($description) && isset($id)) {
 
-        $id = $prodGroupDAO->editProdGroupProdGroup($name,$description,$id );
+        $ok = $prodGroupDAO->editProdGroup($name,$description,$id );
  
-        $retorno = ($id >= 1 ? "Editado com sucesso!" : "Erro ao editar !");
+        $retorno = ($ok ? "Item $id editado com sucesso!" : "Erro ao editar !");
         echo $retorno;
     }
     
