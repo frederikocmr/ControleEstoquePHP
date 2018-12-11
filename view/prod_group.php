@@ -15,10 +15,12 @@ if (!isLoggedIn()) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
     <link rel='stylesheet' href='../util/css/font?family=Open+Sans'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+        html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans" , sans-serif !important}
     </style>
     <body class="w3-theme-l5">
         <!-- Navbar -->
@@ -26,7 +28,7 @@ if (!isLoggedIn()) {
             <div class="w3-bar w3-theme-d2 w3-left-align w3-large" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
                 <a href="home.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
-                <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
+                <a href="prod_group.php" class=" w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white " title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
                 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
                 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
                 <div class="w3-dropdown-hover w3-hide-small">
@@ -58,7 +60,7 @@ if (!isLoggedIn()) {
                 <div class="w3-col m3">
                     <!-- Profile --> 
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <div class="w3-card w3-round w3-white">
+                        <div class="w3-card w3-round w3-white w3-animate-left">
                             <div class="w3-container">
                                 <h4 class="w3-center"><strong>Bem Vindo!</strong></h4>
                                 <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
@@ -78,11 +80,11 @@ if (!isLoggedIn()) {
 
 
                     <!-- Notificações  -->
-                    <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
+                    <div id="div_notificacao" class="w3-animate-left w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
-                        <p><strong>Notificações</strong></p>
+                        <p class="w3-margin-top"><strong>Notificações</strong></p>
 
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="error success" >
@@ -94,7 +96,7 @@ if (!isLoggedIn()) {
                                     </button></p>
                             </div>
                         <?php } else { ?>
-                            <p><button class="w3-button w3-block w3-theme-l4">Nenhuma notificação</button></p>
+                            <p><button id="notificacao" class="w3-button w3-block w3-theme-l3">Nenhuma notificação</button></p>
                         <?php } ?>
 
                     </div>
@@ -113,7 +115,7 @@ if (!isLoggedIn()) {
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
                                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" ><i class="fa fa-book"></i> Visualizar</button>
-                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" onclick="document.getElementById('id01').style.display = 'block'"><i class="fa fa-plus-square"></i> Cadastrar</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" onclick="$('#modal_cadastro').show()"><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
                                 </div>
@@ -121,9 +123,9 @@ if (!isLoggedIn()) {
                         </div>
                     </div>
 
-                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                    <div class="w3-container w3-card w3-white w3-round w3-margin" style="min-height: 547px"><br>
 
-                        <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all" id="display_area">
+                        <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all">
                             <thead>
                                 <tr class="w3-theme-d1 w3-hover-text-theme">
                                     <th data-column-id="id" data-type="numeric">ID</th>
@@ -144,10 +146,10 @@ if (!isLoggedIn()) {
         </div>
         <br>
 
-        <div id="id01" class="w3-modal">
+        <div id="modal_cadastro" class="w3-modal">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-theme-d1"> 
-                    <span onclick="document.getElementById('id01').style.display = 'none'" 
+                    <span onclick="$('#modal_cadastro').hide()" 
                           class="w3-button w3-display-topright">&times;</span>
                     <h2>Cadastrar Grupo de Produto</h2>
                 </header>
@@ -165,7 +167,7 @@ if (!isLoggedIn()) {
                 </form>
                 <footer class="w3-container w3-theme-l1">
                     <div class="w3-bar">
-                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="document.getElementById('id01').style.display = 'none'" ><i class="fa fa-mail-reply"></i> Cancelar</button>
+                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="$('#modal_cadastro').hide()" ><i class="fa fa-mail-reply"></i> Cancelar</button>
                         <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="submit_btn"><i class="fa fa-check"></i> Cadastrar</button>
                     </div>
                 </footer>
@@ -176,12 +178,9 @@ if (!isLoggedIn()) {
             <p >Criado por Anna Lara e Frederiko Cesar</p>
         </footer>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>
-        <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
         <script src="../util/bootgrid/jquery.bootgrid.min.js"></script>
-
         <script >
                             $(document).ready(function () {
 
@@ -189,7 +188,6 @@ if (!isLoggedIn()) {
                                     ajax: true,
                                     post: function ()
                                     {
-                                        /* To accumulate custom parameter with the request object */
                                         return {
                                             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
                                         };
@@ -198,13 +196,12 @@ if (!isLoggedIn()) {
                                     formatters: {
                                         "option": function (column, row)
                                         {
-                                            return "<button type=\"button\" class=\"btn btn-xs btn-default option-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                                                    "<button type=\"button\" class=\"btn btn-xs btn-default option-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                                            return "<button type=\"button\" class=\"btn btn-xs btn-default option-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span> Editar</button> " +
+                                                    "<button type=\"button\" class=\"btn btn-xs btn-default option-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span> Excluir</button>";
                                         }
                                     }
                                 }).on("loaded.rs.jquery.bootgrid", function ()
                                 {
-                                    /* Executes after data is loaded and rendered */
                                     grid.find(".option-edit").on("click", function (e) {
                                         editarDados($(this).data("row-id"));
                                     }).end().find(".option-delete").on("click", function (e) {
@@ -212,7 +209,7 @@ if (!isLoggedIn()) {
                                     });
                                 });
 
-                                // save comment to database
+
                                 $(document).on('click', '#submit_btn', function () {
                                     var name = $('#name').val();
                                     var description = $('#description').val();
@@ -222,69 +219,57 @@ if (!isLoggedIn()) {
                                         data: {
                                             'save': 1,
                                             'name': name,
-                                            'description': description,
+                                            'description': description
                                         },
                                         success: function (response) {
 
                                             $('#name').val('');
                                             $('#description').val('');
-                                            alert(response);
-                                            
+
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('#modal_cadastro').hide()
                                             $('button[title=Atualizar]').click();
                                         }
                                     });
                                 });
 
                                 function editarDados(id) {
-                                    //implementar função que faz post em ajax para o prod_group_controller 
-                                    // semelhante ao cadastro acima...
-                                    var name = $('#name').val();
-                                    var description = $('#description').val();
+
                                     $.ajax({
                                         url: '../controller/prod_group_controller.php',
                                         type: 'POST',
                                         data: {
-                                            'edit': 1,
-                                            'name': name,
-                                            'description': description,
-                                            'id': id,
+                                            'get_edit_values': 1,
+                                            'id': id
                                         },
+                                        dataType: 'json',
                                         success: function (response) {
-   
-                                            $('#name').val('');
-                                            $('#description').val('');
-                                            $('#id').val('');
-                                            alert(response);
-                                            
-                                            $('button[title=Atualizar]').click();
+                                            $('#name').val(response[0].nome);
+                                            $('#description').val(response[0].descricao);
+                                            $('#modal_cadastro').show()
                                         }
                                     });
 
-                                    console.log(id);
                                 }
 
                                 function removerDados(id) {
-                                    //implementar função que faz post em ajax para o prod_group_controller 
-                                    // semelhante ao cadastro acima...
-                                    
-                                    $(document).on('click', '#submit_exc', function () {
-                                    var id = $('#id').val();
+
                                     $.ajax({
                                         url: '../controller/prod_group_controller.php',
                                         type: 'POST',
                                         data: {
-                                            'save': 1,
+                                            'remove': 1,
                                             'id': id
                                         },
                                         success: function (response) {
-                                            $('#id').val('');
-                                            alert(response);
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
                                             $('button[title=Atualizar]').click();
                                         }
                                     });
-                                });
-                                    
-                                    console.log(id);
                                 }
 
                             });

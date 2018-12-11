@@ -1,9 +1,5 @@
 <?php
 
-/*
- *  Copyright 2018, Frederiko Cesar Moreira Ribeiro
- *  GitHub: https://github.com/frederikocmr
- */
 include 'dbconnect.php';
 
 class ProdGroupDAO extends Dbconnect {
@@ -15,15 +11,6 @@ class ProdGroupDAO extends Dbconnect {
         $this->conn = $dbcon->connect();
     }
 
-    public function select($table, $where = '', $other = '') {
-        if ($where != '') {
-            $where = 'where ' . $where;
-        }
-        $sql = " SELECT * FROM  " . $table . " " . $where . " " . $other;
-        $sele = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
-        return $sele;
-    }
-    
     //insere dados
     public function insertProdGroup($name, $description) {
 
@@ -32,21 +19,23 @@ class ProdGroupDAO extends Dbconnect {
         mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return mysqli_insert_id($this->conn);
     }
+
     //edita dados
     public function editProdGroup($name, $description, $id) {
 
         $query = "UPDATE  grupo_produto SET nome = '$name', descricao = '$description' WHERE id = '$id'";
 
-        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-        return true;
+        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return $result;
     }
+
     //deleta dados
     public function deleteProdGroup($id) {
 
-        $query = "DELETE FROM  grupo_produto WHERE id = '$id'";
-        
-        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-        return true;
+        $query = "DELETE FROM grupo_produto WHERE id = '$id'";
+
+        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return $result;
     }
 
     public function getProdGroup($dados_) {
@@ -54,7 +43,7 @@ class ProdGroupDAO extends Dbconnect {
         $records_per_page = 10;
         $start_from = 0;
         $current_page_number = 0;
-        
+
         if (isset($dados_['rowCount'])) {
             $records_per_page = $dados_['rowCount'];
         }
@@ -88,25 +77,34 @@ class ProdGroupDAO extends Dbconnect {
         if ($records_per_page != -1) {
             $query .= ' LIMIT ' . $start_from . ", " . $records_per_page;
         }
-        
+
         $result = mysqli_query($this->conn, $query);
-        
-        while ($row = mysqli_fetch_assoc($result)){
+
+        while ($row = mysqli_fetch_assoc($result)) {
             $data[] = $row;
         }
-        
+
         $query1 = "SELECT * FROM grupo_produto";
         $result1 = mysqli_query($this->conn, $query1);
         $total_records = mysqli_num_rows($result1);
-        
-        $output = array (
-          'current' => intval($dados_["current"]),
-          'rowCount' => 10,
-          'total'    => intval($total_records),
-          'rows'     => $data
+
+        $output = array(
+            'current' => intval($dados_["current"]),
+            'rowCount' => 10,
+            'total' => intval($total_records),
+            'rows' => $data
         );
-        
+
         return $output;
     }
-    
+
+    public function getProdGroupById($id) {
+        $query = " SELECT * FROM grupo_produto WHERE id = $id";
+        $result = mysqli_query($this->conn, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
 }

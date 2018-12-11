@@ -5,24 +5,36 @@ $prodGroupDAO = new ProdGroupDAO();
 $errors = array();
 
 
-if(isset($_POST['id'])){
-
+if((isset($_POST['id'])) && ($_POST['id']=="b0df282a-0d67-40e5-8558-c9e93b7befed")){
     getProdGroup();
 }
 
 if (isset($_POST['save'])) {
     saveProdGroup();
-    
+}
+
+if (isset($_POST['remove'])) {
+    removeProdGroup();
+}
+
+if (isset($_POST['get_edit_values'])){
+    getProdGroupById();
 }
 
 function getProdGroup(){
-    global $prodGroupDAO, $errors;
+    global $prodGroupDAO;
     $output = $prodGroupDAO->getProdGroup($_POST);
     echo json_encode($output);
 }
 
+function getProdGroupById(){
+    global $prodGroupDAO;
+    $output = $prodGroupDAO->getProdGroupById($_POST['id']);
+    echo json_encode($output);
+}
+
 function saveProdGroup() {
-    global $prodGroupDAO, $errors;
+    global $prodGroupDAO;
     $name = $_POST['name'];
     $description = $_POST['description'];
 
@@ -33,13 +45,12 @@ function saveProdGroup() {
  
         $retorno = ($id >= 1 ? "Cadastrado com sucesso!" : "Erro ao cadastrar!");
         echo $retorno;
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
+    } 
     exit();
 }
+
 function editProdGroup() {
-    global $prodGroupDAO, $errors;
+    global $prodGroupDAO;
     $name = $_POST['name'];
     $description = $_POST['description'];
 
@@ -50,25 +61,20 @@ function editProdGroup() {
  
         $retorno = ($id >= 1 ? "Editado com sucesso!" : "Erro ao editar !");
         echo $retorno;
-    } else {
-        echo "Error: " . mysqli_error($conn);
     }
+    
     exit();
 }
-function deleteProdGroup() {
-    global $prodGroupDAO, $errors;
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-
+function removeProdGroup() {
+    global $prodGroupDAO;
+    $id = $_POST['id'];
 
     if (isset($id)) {
 
-        $id = $prodGroupDAO->deleteProdGroup($id);
+        $ok = $prodGroupDAO->deleteProdGroup($id);
  
-        $retorno = ($id >= 1 ? "Deletado com sucesso!" : "Erro ao deletar!");
+        $retorno = ($ok ? "Item $id deletado com sucesso!" : "Erro ao deletar!");
         echo $retorno;
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
+    } 
     exit();
 }
