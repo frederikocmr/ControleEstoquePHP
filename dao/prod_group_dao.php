@@ -32,7 +32,7 @@ class ProdGroupDAO extends Dbconnect {
     //deleta dados
     public function deleteProdGroup($id) {
 
-        $query = "DELETE FROM grupo_produto WHERE id = '$id'";
+        $query = "DELETE FROM grupo_produto WHERE id = $id";
 
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;

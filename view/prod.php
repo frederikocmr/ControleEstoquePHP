@@ -271,6 +271,7 @@ if (!isLoggedIn()) {
                                         }
                                     });
                                 }
+                                
                                 function dadosGrupo() {
                                     $.ajax({
                                         url: '../controller/prod_controller.php',

@@ -5,8 +5,7 @@ $prodDAO = new ProdDAO();
 $errors = array();
 
 
-if(isset($_POST['id'])){
-
+if((isset($_POST['id'])) && ($_POST['id']=="b0df282a-0d67-40e5-8558-c9e93b7befed")){
     getProd();
 }
 
@@ -19,7 +18,7 @@ if (isset ($_POST['dados_grupo'])){
     dadosGrupo();
 }
 if (isset($_POST['remove'])) {
-    removeSecao();
+    removeProd();
 }
 if (isset($_POST['get_edit_values'])){
     editSecao();
@@ -65,7 +64,7 @@ function editSecao() {
     
     exit();
 }
-function removeSecao() {
+function removeProd() {
     global $prodDAO;
     $id = $_POST['id'];
 
