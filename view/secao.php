@@ -85,7 +85,7 @@ if (!isAdmin()) {
 
 
                     <!-- Notificações  -->
-                    <div id="div_notificacao" class="w3-animate-left w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
+                    <div id="div_notificacao" class="w3-animate-bottom w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
@@ -110,7 +110,7 @@ if (!isAdmin()) {
                 </div>
 
                 <!-- Middle Column -->
-                <div class="w3-col m9">
+                <div class="w3-col m9 w3-animate-right">
 
                     <div class="w3-row-padding">
                         <div class="w3-col m12">
@@ -128,7 +128,7 @@ if (!isAdmin()) {
                         </div>
                     </div>
 
-                    <div class="w3-container w3-card w3-white w3-round w3-margin" style="min-height: 547px"><br>
+                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
                         <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all">
                             <thead>
