@@ -18,6 +18,12 @@ if (isset($_POST['save'])) {
 if (isset ($_POST['dados_grupo'])){
     dadosGrupo();
 }
+if (isset($_POST['remove'])) {
+    removeSecao();
+}
+if (isset($_POST['get_edit_values'])){
+    editSecao();
+}
 
 function getProd(){
     global $prodDAO, $errors;
@@ -43,40 +49,36 @@ function saveProd() {
     }
     exit();
 }
-function editProd() {
-    global $prodDAO, $errors;
+function editSecao() {
+    global $prodDAO;
     $name = $_POST['name'];
     $description = $_POST['description'];
 
 
     if (isset($name) && isset($description) && isset($id)) {
 
-        $id = $prodDAO->editProd($name,$description,$id );
+        $id = $prodDAO->edit($name,$description,$id );
  
         $retorno = ($id >= 1 ? "Editado com sucesso!" : "Erro ao editar !");
         echo $retorno;
-    } else {
-        echo "Error: " . mysqli_error($conn);
     }
+    
     exit();
 }
-function deleteProd() {
-    global $prodDAO, $errors;
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-
+function removeSecao() {
+    global $prodDAO;
+    $id = $_POST['id'];
 
     if (isset($id)) {
 
-        $id = $prodDAO->deleteProd($id);
+        $ok = $prodDAO->delete($id);
  
-        $retorno = ($id >= 1 ? "Deletado com sucesso!" : "Erro ao deletar!");
+        $retorno = ($ok ? "Item $id deletado com sucesso!" : "Erro ao deletar!");
         echo $retorno;
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
+    } 
     exit();
 }
+
 
 function dadosGrupo(){
     global $prodDAO;
