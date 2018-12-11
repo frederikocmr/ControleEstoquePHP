@@ -10,9 +10,10 @@ if (!isLoggedIn()) {
 ?>
 <!DOCTYPE html>
 <html>
-    <title>Tela Inicial</title>
+    <title>Controle de Estoque - Grupo de Produto</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../util/images/favicon.png">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -80,7 +81,7 @@ if (!isLoggedIn()) {
 
 
                     <!-- Notificações  -->
-                    <div id="div_notificacao" class="w3-animate-left w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
+                    <div id="div_notificacao" class="w3-animate-bottom w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
@@ -105,7 +106,7 @@ if (!isLoggedIn()) {
                 </div>
 
                 <!-- Middle Column -->
-                <div class="w3-col m9">
+                <div class="w3-col m9 w3-animate-right">
 
                     <div class="w3-row-padding">
                         <div class="w3-col m12">
@@ -123,7 +124,7 @@ if (!isLoggedIn()) {
                         </div>
                     </div>
 
-                    <div class="w3-container w3-card w3-white w3-round w3-margin" style="min-height: 547px"><br>
+                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
                         <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all">
                             <thead>
@@ -139,10 +140,7 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </div>
-            <br>
-            <hr class="w3-clear">
-            <br>
-            <hr class="w3-clear">
+        
         </div>
         <br>
 
@@ -174,9 +172,9 @@ if (!isLoggedIn()) {
             </div>
         </div>
 
-        <footer class="w3-container w3-theme-d5">
+<!--        <footer class="w3-container w3-theme-d5">
             <p >Criado por Anna Lara e Frederiko Cesar</p>
-        </footer>
+        </footer>-->
 
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>

@@ -10,11 +10,14 @@ if (!isLoggedIn()) {
 ?>
 <!DOCTYPE html>
 <html>
-    <title>Tela Inicial</title>
+    <title>Controle de Estoque - Produto</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../util/images/favicon.png">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
     <link rel='stylesheet' href='../util/css/font?family=Open+Sans'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -58,7 +61,7 @@ if (!isLoggedIn()) {
                 <div class="w3-col m3">
                     <!-- Profile --> 
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <div class="w3-card w3-round w3-white">
+                        <div class="w3-card w3-round w3-white w3-animate-left">
                             <div class="w3-container">
                                 <h4 class="w3-center"><strong>Bem Vindo!</strong></h4>
                                 <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
@@ -67,7 +70,6 @@ if (!isLoggedIn()) {
                                     <?php echo ucfirst($_SESSION['user']['username']); ?><small>
                                         <i  style="color: #888;">(<?php echo ($_SESSION['user']['user_type']); ?>)</i> 
                                         <br>
-
                                     </small>
                                 </p>
                                 <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i> <?php echo ($_SESSION['user']['email']); ?></p>
@@ -78,11 +80,11 @@ if (!isLoggedIn()) {
 
 
                     <!-- Notificações  -->
-                    <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
+                    <div id="div_notificacao" class="w3-animate-bottom w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
-                        <p><strong>Notificações</strong></p>
+                        <p class="w3-margin-top"><strong>Notificações</strong></p>
 
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="error success" >
@@ -94,16 +96,15 @@ if (!isLoggedIn()) {
                                     </button></p>
                             </div>
                         <?php } else { ?>
-                            <p><button class="w3-button w3-block w3-theme-l4">Nenhuma notificação</button></p>
+                            <p><button id="notificacao" class="w3-button w3-block w3-theme-l3">Nenhuma notificação</button></p>
                         <?php } ?>
 
                     </div>
-
                     <!-- End Left Column -->
                 </div>
 
                 <!-- Middle Column -->
-                <div class="w3-col m9">
+                <div class="w3-col m9 w3-animate-right">
 
                     <div class="w3-row-padding">
                         <div class="w3-col m12">
@@ -123,7 +124,7 @@ if (!isLoggedIn()) {
 
                     <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
-                        <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all" id="display_area">
+                        <table id="grid-data" class="table table-condensed table-hover table-striped w3-table-all">
                             <thead>
                                 <tr class="w3-theme-d1 w3-hover-text-theme">
                                     <th data-column-id="id" data-type="numeric">ID</th>
@@ -138,10 +139,7 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </div>
-            <br>
-            <hr class="w3-clear">
-            <br>
-            <hr class="w3-clear">
+      
         </div>
         <br>
 
@@ -163,7 +161,6 @@ if (!isLoggedIn()) {
                         <input class="w3-input"  type="text" name="description" id="description">
                     </p>  
                     <br>
-                    </p>     
                     <p>
                         <label for="id_grupo">Grupo</label>
                         <select class="w3-input"   name="id_grupo" id="id_grupo">
@@ -181,14 +178,12 @@ if (!isLoggedIn()) {
             </div>
         </div>
 
-        <footer class="w3-container w3-theme-d5">
+<!--        <footer class="w3-container w3-theme-d5">
             <p >Criado por Anna Lara e Frederiko Cesar</p>
-        </footer>
+        </footer>-->
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>
-        <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
         <script src="../util/bootgrid/jquery.bootgrid.min.js"></script>
 
         <script >
@@ -313,7 +308,8 @@ if (!isLoggedIn()) {
                                         success: function (response) {
                                             console.log(response);
                                             var html = '';
-                                            $.each(response, function (key, val) {;
+                                            $.each(response, function (key, val) {
+                                                ;
                                                 html += '<option value="' + val.id + '">' + val.nome + '</option>';
                                             });
                                             $("#id_grupo").append(html);
