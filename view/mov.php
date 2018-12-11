@@ -148,25 +148,26 @@ if (!isLoggedIn()) {
                 <header class="w3-container w3-theme-d1"> 
                     <span onclick="$('#modal_cadastro').hide()" 
                           class="w3-button w3-display-topright">&times;</span>
-                    <h2><label id="label_modal">Cadastrar</label> Produto</h2>
+                    <h2><label id="label_modal">Cadastrar</label> Movimentação</h2>
                 </header>
                 <form class="w3-container">
                     <br>
-                    <p>
-                        <label for="name">Nome</label>
-                        <input class="w3-input"  type="text" name="name" id="name">
-                    </p>     
                     <p>
                         <label for="name">Descrição</label>
                         <input class="w3-input"  type="text" name="description" id="description">
                     </p>  
                     <br>
                     <p>
-                        <label for="id_grupo">Grupo</label>
-                        <select class="w3-input"   name="id_grupo" id="id_grupo">
-
+                        <label for="id_produto">Produto</label>
+                        <select class="w3-input"   name="id_produto" id="id_produto">
                         </select>
-                    </p>  
+                    </p> 
+                    <br>
+                    <p>
+                        <label for="id_secao">Seção</label>
+                        <select class="w3-input"   name="id_secao" id="id_secao">
+                        </select>
+                    </p> 
                     <br>
                     <input type="hidden" id="prod_id" name="prod_id" value="">
                 </form>

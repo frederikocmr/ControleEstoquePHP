@@ -17,7 +17,7 @@ $link = mysqli_connect('localhost','root','','controleestoque');
 $pdf = new PDF();
 $pdf->AddPage();
 
-$pdf->Table($link,'select * from produto');
+$pdf->Table($link,'select * from movimentacao');
 
 $pdf->Output();
 ?>
