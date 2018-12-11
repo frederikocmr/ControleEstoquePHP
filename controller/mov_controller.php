@@ -4,7 +4,10 @@ include("../dao/mov_dao.php");
 $movDAO = new MovDAO();
 $errors = array();
 
-
+/**
+ * V
+ * @package controller
+ */
 if(isset($_POST['id'])){
 
     getProd();
@@ -24,13 +27,19 @@ if (isset($_POST['remove'])) {
 if (isset($_POST['get_edit_values'])){
     editSecao();
 }
-
+/**
+ * Essa função pega o produto 
+ * @package controller
+ */
 function getProd(){
     global $prodDAO, $errors;
     $output = $prodDAO->getProd($_POST);
     echo json_encode($output);
 }
-
+/**
+ * Função para salvar o produto 
+ * @package controller
+ */
 function saveProd() {
     global $prodDAO, $errors;
     $name = $_POST['name'];
@@ -49,6 +58,10 @@ function saveProd() {
     }
     exit();
 }
+/**
+ * Função para editar os atricutos do produto
+ * @package controller
+ */
 function editSecao() {
     global $prodDAO;
     $name = $_POST['name'];
@@ -65,6 +78,10 @@ function editSecao() {
     
     exit();
 }
+/**
+ * Função para remover o produto 
+ * @package controller
+ */
 function removeSecao() {
     global $prodDAO;
     $id = $_POST['id'];
@@ -79,7 +96,10 @@ function removeSecao() {
     exit();
 }
 
-
+/**
+ * Função para recuperar do banco dados do produto e retornar um json
+ * @package controller
+ */
 function dadosProduto(){
     global $movDAO;
     $dados = $movDAO->getDadosProduto();

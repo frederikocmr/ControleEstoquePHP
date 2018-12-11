@@ -2,6 +2,10 @@
 session_start();
 
 class Dbconnect {
+    /**
+ * Função conectar com o banco de dados
+ * @package dao
+ */
     public function connect(){
          $host = 'localhost';
          $user = 'root';

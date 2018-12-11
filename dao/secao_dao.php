@@ -5,13 +5,19 @@ include 'dbconnect.php';
 class SecaoDAO extends Dbconnect {
 
     private $conn;
-
+/**
+ * Construtor
+ * @package dao
+ */
     public function __construct() {
         $dbcon = new parent();
         $this->conn = $dbcon->connect();
     }
 
-    //insere dados
+/**
+ * Função que insere dados no banco de dados
+ * @package dao
+ */
     public function insertSecao($name, $description) {
 
         $query = "INSERT INTO secao (nome, descricao) VALUES ('{$name}', '{$description}')";
@@ -20,7 +26,10 @@ class SecaoDAO extends Dbconnect {
         return mysqli_insert_id($this->conn);
     }
 
-    //edita dados
+/**
+ * Função que edita dados
+ * @package dao
+ */
     public function editSecao($name, $description, $id) {
 
         $query = "UPDATE  secao SET nome = '$name', descricao = '$description' WHERE id = '$id'";
@@ -29,7 +38,10 @@ class SecaoDAO extends Dbconnect {
         return $result;
     }
 
-    //deleta dados
+ /**
+ * Função que exclui um dado de acordo com o id
+ * @package dao
+ */
     public function deleteSecao($id) {
 
         $query = "DELETE FROM secao WHERE id = '$id'";
@@ -37,7 +49,10 @@ class SecaoDAO extends Dbconnect {
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
     }
-
+/**
+ * Função que pega dados de secao
+ * @package dao
+ */
     public function getSecao($dados_) {
         $data = array();
         $records_per_page = 10;
@@ -97,7 +112,10 @@ class SecaoDAO extends Dbconnect {
 
         return $output;
     }
-
+/**
+ * Função que retorna dados em um array
+ * @package dao
+ */
     public function getSecaoById($id) {
         $query = " SELECT * FROM secao WHERE id = $id";
         $result = mysqli_query($this->conn, $query);

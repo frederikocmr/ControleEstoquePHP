@@ -142,7 +142,7 @@ if (!isLoggedIn()) {
                 <header class="w3-container w3-theme-d1"> 
                     <span onclick="document.getElementById('id01').style.display = 'none'" 
                           class="w3-button w3-display-topright">&times;</span>
-                    <h2>Cadastrar Produto</h2>
+                    <h2>Cadastrar Movimentação</h2>
                 </header>
                 <form class="w3-container">
                     <br>

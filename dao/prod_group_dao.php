@@ -5,13 +5,19 @@ include 'dbconnect.php';
 class ProdGroupDAO extends Dbconnect {
 
     private $conn;
-
+/**
+ * Construtor
+ * @package dao
+ */
     public function __construct() {
         $dbcon = new parent();
         $this->conn = $dbcon->connect();
     }
 
-    //insere dados
+/**
+ * Função que insere os dados no banco de dados
+ * @package dao
+ */
     public function insertProdGroup($name, $description) {
 
         $query = "INSERT INTO grupo_produto (nome, descricao) VALUES ('{$name}', '{$description}')";
@@ -20,7 +26,10 @@ class ProdGroupDAO extends Dbconnect {
         return mysqli_insert_id($this->conn);
     }
 
-    //edita dados
+/**
+ * Função edita os dados
+ * @package dao
+ */
     public function editProdGroup($name, $description, $id) {
 
         $query = "UPDATE  grupo_produto SET nome = '$name', descricao = '$description' WHERE id = $id";
@@ -29,7 +38,10 @@ class ProdGroupDAO extends Dbconnect {
         return $result;
     }
 
-    //deleta dados
+/**
+ * Função exclui um elemento de acordo com o id
+ * @package dao
+ */
     public function deleteProdGroup($id) {
 
         $query = "DELETE FROM grupo_produto WHERE id = $id";
@@ -37,7 +49,10 @@ class ProdGroupDAO extends Dbconnect {
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
     }
-
+/**
+ * Função recupera dados de produto
+ * @package dao
+ */
     public function getProdGroup($dados_) {
         $data = array();
         $records_per_page = 10;
@@ -97,7 +112,10 @@ class ProdGroupDAO extends Dbconnect {
 
         return $output;
     }
-
+/**
+ * Função retorna dados em um array
+ * @package dao
+ */
     public function getProdGroupById($id) {
         $query = " SELECT * FROM grupo_produto WHERE id = $id";
         $result = mysqli_query($this->conn, $query);
