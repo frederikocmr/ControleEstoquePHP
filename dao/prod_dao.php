@@ -1,9 +1,5 @@
 <?php
 
-/*
- *  Copyright 2018, Frederiko Cesar Moreira Ribeiro
- *  GitHub: https://github.com/frederikocmr
- */
 include 'dbconnect.php';
 
 class ProdDAO extends Dbconnect {
@@ -23,7 +19,7 @@ class ProdDAO extends Dbconnect {
         $sele = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
         return $sele;
     }
-    
+
     //insere dados
     public function insertProd($name, $description, $id_grupo) {
 
@@ -32,10 +28,11 @@ class ProdDAO extends Dbconnect {
         mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return mysqli_insert_id($this->conn);
     }
-    //edita dados
-      public function edit($name, $description, $id) {
 
-        $query = "UPDATE  produto SET nome = '$name', descricao = '$description' WHERE id = '$id'";
+    //edita dados
+    public function editProd($name, $description, $id, $id_grupo) {
+
+        $query = "UPDATE  produto SET nome = '$name', descricao = '$description', id_grupo = $id_grupo WHERE id = $id";
 
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
@@ -44,7 +41,7 @@ class ProdDAO extends Dbconnect {
     //deleta dados
     public function delete($id) {
 
-        $query = "DELETE FROM produto WHERE id = '$id'";
+        $query = "DELETE FROM produto WHERE id = $id";
 
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
@@ -55,7 +52,7 @@ class ProdDAO extends Dbconnect {
         $records_per_page = 10;
         $start_from = 0;
         $current_page_number = 0;
-        
+
         if (isset($dados_['rowCount'])) {
             $records_per_page = $dados_['rowCount'];
         }
@@ -89,35 +86,44 @@ class ProdDAO extends Dbconnect {
         if ($records_per_page != -1) {
             $query .= ' LIMIT ' . $start_from . ", " . $records_per_page;
         }
-        
+
         $result = mysqli_query($this->conn, $query);
-        
-        while ($row = mysqli_fetch_assoc($result)){
+
+        while ($row = mysqli_fetch_assoc($result)) {
             $data[] = $row;
         }
-        
+
         $query1 = "SELECT * FROM produto";
         $result1 = mysqli_query($this->conn, $query1);
         $total_records = mysqli_num_rows($result1);
-        
-        $output = array (
-          'current' => intval($dados_["current"]),
-          'rowCount' => 10,
-          'total'    => intval($total_records),
-          'rows'     => $data
+
+        $output = array(
+            'current' => intval($dados_["current"]),
+            'rowCount' => 10,
+            'total' => intval($total_records),
+            'rows' => $data
         );
-        
+
         return $output;
     }
     
+    public function getProdById($id) {
+        $query = " SELECT * FROM produto WHERE id = $id";
+        $result = mysqli_query($this->conn, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
     public function getDadosGrupo() {
         $query = "SELECT * FROM grupo_produto";
         $result = mysqli_query($this->conn, $query);
-        
-        while ($row = mysqli_fetch_assoc($result)){
-                    $data[] = $row;
-                }
-                return $data;
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
     }
-    
+
 }

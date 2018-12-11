@@ -108,7 +108,7 @@ if (!isLoggedIn()) {
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
                                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" ><i class="fa fa-book"></i> Visualizar</button>
-                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" onclick="document.getElementById('id01').style.display = 'block'"><i class="fa fa-plus-square"></i> Cadastrar</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" id="cadastrar_btn"><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
                                 </div>
@@ -133,16 +133,16 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </div>
-      
+
         </div>
         <br>
 
-        <div id="id01" class="w3-modal">
+        <div id="modal_cadastro" class="w3-modal">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-theme-d1"> 
-                    <span onclick="document.getElementById('id01').style.display = 'none'" 
+                    <span onclick="$('#modal_cadastro').hide()" 
                           class="w3-button w3-display-topright">&times;</span>
-                    <h2>Cadastrar Produto</h2>
+                    <h2><label id="label_modal">Cadastrar</label> Produto</h2>
                 </header>
                 <form class="w3-container">
                     <br>
@@ -162,19 +162,21 @@ if (!isLoggedIn()) {
                         </select>
                     </p>  
                     <br>
+                    <input type="hidden" id="prod_id" name="prod_id" value="">
                 </form>
                 <footer class="w3-container w3-theme-l1">
                     <div class="w3-bar">
-                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="document.getElementById('id01').style.display = 'none'" ><i class="fa fa-mail-reply"></i> Cancelar</button>
+                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="$('#modal_cadastro').hide()" ><i class="fa fa-mail-reply"></i> Cancelar</button>
                         <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="submit_btn"><i class="fa fa-check"></i> Cadastrar</button>
+                        <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="edit_btn"><i class="fa fa-check"></i> Atualizar</button>
                     </div>
                 </footer>
             </div>
         </div>
 
-<!--        <footer class="w3-container w3-theme-d5">
-            <p >Criado por Anna Lara e Frederiko Cesar</p>
-        </footer>-->
+        <!--        <footer class="w3-container w3-theme-d5">
+                    <p >Criado por Anna Lara e Frederiko Cesar</p>
+                </footer>-->
 
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>
@@ -211,6 +213,15 @@ if (!isLoggedIn()) {
                                     });
                                 });
 
+                                $(document).on('click', '#cadastrar_btn', function () {
+                                    $('#submit_btn').show();
+                                    $('#edit_btn').hide();
+                                    $('#label_modal').text('Cadastrar');
+                                    $('#name').val('');
+                                    $('#description').val('');
+                                    $('#modal_cadastro').show();
+                                });
+
                                 // save comment to database
                                 $(document).on('click', '#submit_btn', function () {
                                     var name = $('#name').val();
@@ -223,22 +234,53 @@ if (!isLoggedIn()) {
                                             'save': 1,
                                             'name': name,
                                             'description': description,
-                                            'id_grupo': id_grupo,
+                                            'id_grupo': id_grupo
                                         },
                                         success: function (response) {
-
                                             $('#name').val('');
                                             $('#description').val('');
-                                            $('#id_grupo').val('');
-                                            alert(response);
 
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('#modal_cadastro').hide()
                                             $('button[title=Atualizar]').click();
                                         }
                                     });
                                 });
 
+                                $(document).on('click', '#edit_btn', function () {
+                                    var name = $('#name').val();
+                                    var description = $('#description').val();
+                                    var id_grupo = $('#id_grupo').val();
+                                    var id = $('#prod_id').val();
+                                    $.ajax({
+                                        url: '../controller/prod_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'edit': 1,
+                                            'name': name,
+                                            'description': description,
+                                            'id_grupo': id_grupo,
+                                            'id': id
+                                        },
+                                        success: function (response) {
+
+                                            $('#name').val('');
+                                            $('#description').val('');
+
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('#modal_cadastro').hide()
+                                            $('button[title=Atualizar]').click();
+                                        }
+                                    });
+                                });
+
+
                                 function editarDados(id) {
-                                     $.ajax({
+                                    $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
@@ -247,8 +289,12 @@ if (!isLoggedIn()) {
                                         },
                                         dataType: 'json',
                                         success: function (response) {
+                                            $('#submit_btn').hide();
+                                            $('#edit_btn').show();
+                                            $('#label_modal').text('Editar');
                                             $('#name').val(response[0].nome);
                                             $('#description').val(response[0].descricao);
+                                            $('#prod_id').val(response[0].id);
                                             $('#modal_cadastro').show();
                                         }
                                     });
@@ -256,7 +302,8 @@ if (!isLoggedIn()) {
                                 }
 
                                 function removerDados(id) {
-                                   $.ajax({
+
+                                    $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
@@ -271,6 +318,7 @@ if (!isLoggedIn()) {
                                         }
                                     });
                                 }
+
                                 function dadosGrupo() {
                                     $.ajax({
                                         url: '../controller/prod_controller.php',
