@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 11-Dez-2018 às 03:15
+-- Generation Time: 11-Dez-2018 às 04:11
 -- Versão do servidor: 5.7.23
 -- versão do PHP: 5.6.38
 
@@ -41,7 +41,6 @@ CREATE TABLE IF NOT EXISTS `grupo_produto` (
 --
 
 INSERT INTO `grupo_produto` (`id`, `nome`, `descricao`) VALUES
-(28, 'Vasilha', 'vasilha de aluminio'),
 (29, 'lÃ¡pis', 'lÃ¡pis rosa'),
 (30, 'lÃ¡pis', 'lÃ¡pis rosa'),
 (31, 'lÃ¡pis', 'lÃ¡pis rosa'),
@@ -70,6 +69,23 @@ INSERT INTO `grupo_produto` (`id`, `nome`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `movimentacao`
+--
+
+DROP TABLE IF EXISTS `movimentacao`;
+CREATE TABLE IF NOT EXISTS `movimentacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produto` int(11) DEFAULT NULL,
+  `id_secao` int(11) DEFAULT NULL,
+  `descricao` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_produto` (`id_produto`),
+  KEY `id_secao` (`id_secao`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `produto`
 --
 
@@ -88,10 +104,6 @@ CREATE TABLE IF NOT EXISTS `produto` (
 --
 
 INSERT INTO `produto` (`id`, `nome`, `descricao`, `id_grupo`) VALUES
-(1, 'Camisa', 'Camisa rosa com bolso', 2),
-(2, 'Blusa', 'Blusa laranja decote', 1),
-(3, 'CalÃ§a', 'CalÃ§a preta com ziper', 3),
-(4, 'oios', 'sasdsd', 31),
 (5, 'tese', 'sdasd', 44);
 
 -- --------------------------------------------------------
