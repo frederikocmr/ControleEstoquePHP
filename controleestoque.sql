@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 11-Dez-2018 às 02:23
+-- Generation Time: 11-Dez-2018 às 03:15
 -- Versão do servidor: 5.7.23
 -- versão do PHP: 5.6.38
 
@@ -93,6 +93,20 @@ INSERT INTO `produto` (`id`, `nome`, `descricao`, `id_grupo`) VALUES
 (3, 'CalÃ§a', 'CalÃ§a preta com ziper', 3),
 (4, 'oios', 'sasdsd', 31),
 (5, 'tese', 'sdasd', 44);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `secao`
+--
+
+DROP TABLE IF EXISTS `secao`;
+CREATE TABLE IF NOT EXISTS `secao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(60) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
