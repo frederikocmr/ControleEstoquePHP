@@ -9,9 +9,10 @@ if (!isLoggedIn()) {
 ?>
 <!DOCTYPE html>
 <html>
-    <title>Tela Inicial</title>
+    <title>Controle de Estoque</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png"  href="../util/images/favicon.png">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
     <link rel='stylesheet' href='../util/css/font?family=Open+Sans'>
@@ -57,7 +58,7 @@ if (!isLoggedIn()) {
                 <div class="w3-col m3">
                     <!-- Profile --> 
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <div class="w3-card w3-round w3-white">
+                        <div class="w3-card w3-round w3-white w3-animate-left">
                             <div class="w3-container">
                                 <h4 class="w3-center"><strong>Bem Vindo!</strong></h4>
                                 <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
@@ -77,7 +78,7 @@ if (!isLoggedIn()) {
 
 
                     <!-- Notificações  -->
-                    <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
+                    <div class="w3-animate-bottom w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-shadow w3-margin-bottom w3-hide-small">
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
@@ -107,23 +108,23 @@ if (!isLoggedIn()) {
                     <div class="w3-row-padding">
                         <div class="w3-col m12">
                             <div class="w3-row-padding">
-                                <div class="w3-third w3-container w3-margin-bottom "  >
-                                    <img src="../util/images/boxes.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover" >
+                                <div class="w3-third w3-container w3-margin-bottom w3-animate-right "  >
+                                    <a href="prod_group.php"><img src="../util/images/boxes.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover" ></a>
                                     <div class="w3-container w3-white w3-theme-shadow" >
                                         <p><b>Grupos de Produtos</b></p>
                                         <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
                                     </div>
                                 </div>
-                                <div class="w3-third w3-container w3-margin-bottom">
-                                    <img src="../util/images/boxes2.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover">
+                                <div class="w3-third w3-container w3-margin-bottom w3-animate-right">
+                                    <a href="prod.php"><img src="../util/images/boxes2.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover"></a>
                                     
                                     <div class="w3-container w3-white w3-theme-shadow">
                                         <p><b>Produtos</b></p>
                                         <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
                                     </div>
                                 </div>
-                                <div class="w3-third w3-container">
-                                    <img src="../util/images/boxes4.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover">
+                                <div class="w3-third w3-container w3-animate-right">
+                                    <a href="prod.php"><img src="../util/images/boxes4.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover"></a>
                                     <div class="w3-container w3-white w3-theme-shadow">
                                         <p><b>Movimentação</b></p>
                                         <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
