@@ -68,7 +68,7 @@ class ProdDAO extends Dbconnect {
         $query = " SELECT p.*, gp.nome gpnome FROM produto p LEFT JOIN grupo_produto gp ON p.id_grupo = gp.id ";
 
         if (!empty($dados_['searchPhrase'])) {
-            $query .= ' WHERE nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
+            $query .= ' WHERE p.nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
         }
 
         $orderBy = '';
@@ -78,7 +78,7 @@ class ProdDAO extends Dbconnect {
                 $orderBy .= `$key $value, `;
             }
         } else {
-            $query .= ' ORDER BY id DESC ';
+            $query .= ' ORDER BY p.id DESC ';
         }
 
         if ($orderBy != '') {
