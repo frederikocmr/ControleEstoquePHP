@@ -30,9 +30,9 @@ class ProdDAO extends Dbconnect {
     }
 
     //edita dados
-    public function edit($name, $description, $id) {
+    public function editProd($name, $description, $id, $id_grupo) {
 
-        $query = "UPDATE  produto SET nome = '$name', descricao = '$description' WHERE id = '$id'";
+        $query = "UPDATE  produto SET nome = '$name', descricao = '$description', id_grupo = $id_grupo WHERE id = $id";
 
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
@@ -105,6 +105,15 @@ class ProdDAO extends Dbconnect {
         );
 
         return $output;
+    }
+    
+    public function getProdById($id) {
+        $query = " SELECT * FROM produto WHERE id = $id";
+        $result = mysqli_query($this->conn, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
     }
 
     public function getDadosGrupo() {
