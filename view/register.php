@@ -6,6 +6,7 @@ include('../controller/user_controller.php') ?>
     <head>
         <title>Cadastro</title>
         <link rel="stylesheet" type="text/css" href="../util/css/style.css">
+        <link rel="icon" type="image/png" href="../util/images/favicon.png">
     </head>
     <body>
         <div class="header">

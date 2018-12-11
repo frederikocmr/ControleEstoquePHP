@@ -13,6 +13,7 @@ if (!isLoggedIn()) {
     <title>Tela Inicial</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../util/images/favicon.png">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -31,13 +32,7 @@ if (!isLoggedIn()) {
                 <a href="prod_group.php" class=" w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white " title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
                 <a href="prod.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
                 <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
-                <div class="w3-dropdown-hover w3-hide-small">
-                    <button class="w3-button w3-padding-large" title="Movimentação"><i class="fa fa-mail-forward"></i><span class="w3-badge w3-right w3-small w3-green">2</span></button>     
-                    <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
-                        <a href="#" class="w3-bar-item w3-button">Cadastrar Movimentação</a>
-                        <a href="#" class="w3-bar-item w3-button">Visualizar Movimentações</a>
-                    </div>
-                </div>
+                <a href="mov.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Movimentação"><i class="fa fa-mail-forward"></i></a>
                 <a href="home_user.php?logout='1'" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="SAIR">
                     <i class="fa fa-sign-out"></i> SAIR
                 </a>

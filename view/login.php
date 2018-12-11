@@ -15,6 +15,7 @@ if (isLoggedIn()) {
     <head>
         <title>Login</title>
         <link rel="stylesheet" type="text/css" href="../util/css/style.css">
+        <link rel="icon" type="image/png" href="../util/images/favicon.png">
     </head>
     <body>
 

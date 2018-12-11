@@ -12,6 +12,7 @@ if (!isAdmin()) {
     <head>
         <title>Página Inicial Administrador</title>
         <link rel="stylesheet" type="text/css" href="../util/css/style.css">
+        <link rel="icon" type="image/png" href="../util/images/favicon.png">
         <style>
             .header {
                 background: #003366;
