@@ -33,20 +33,21 @@ class ProdDAO extends Dbconnect {
         return mysqli_insert_id($this->conn);
     }
     //edita dados
-    public function editProd($name, $description, $id, $id_grupo ) {
+      public function edit($name, $description, $id) {
 
-        $query = "UPDATE  produto SET nome = '$name', descricao = '$description', id_grupo = '$id_grupo' WHERE id = '$id'";
+        $query = "UPDATE  produto SET nome = '$name', descricao = '$description' WHERE id = '$id'";
 
-        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-        return true;
+        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return $result;
     }
-    //deleta dados
-    public function deleteProd($id) {
 
-        $query = "DELETE FROM  produto WHERE id = '$id'";
-        
-        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-        return true;
+    //deleta dados
+    public function delete($id) {
+
+        $query = "DELETE FROM produto WHERE id = '$id'";
+
+        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return $result;
     }
 
     public function getProd($dados_) {

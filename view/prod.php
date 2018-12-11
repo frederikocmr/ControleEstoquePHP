@@ -203,8 +203,8 @@ if (!isLoggedIn()) {
                                     formatters: {
                                         "option": function (column, row)
                                         {
-                                            return "<button type=\"button\" class=\"btn btn-xs btn-default option-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                                                    "<button type=\"button\" class=\"btn btn-xs btn-default option-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                                            return "<button type=\"button\" class=\"btn btn-xs btn-default option-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span> Editar</button> " +
+                                                    "<button type=\"button\" class=\"btn btn-xs btn-default option-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span> Excluir</button>";
                                         }
                                     }
                                 }).on("loaded.rs.jquery.bootgrid", function ()
@@ -244,58 +244,38 @@ if (!isLoggedIn()) {
                                 });
 
                                 function editarDados(id) {
-                                    //implementar função que faz post em ajax para o prod_controller 
-                                    // semelhante ao cadastro acima...
-                                    var id_grupo = $('#id_grupo').val();
-                                    var name = $('#name').val();
-                                    var description = $('#description').val();
-                                    $.ajax({
+                                     $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
-                                            'edit': 1,
-                                            'name': name,
-                                            'description': description,
-                                            'id': id,
-                                            'id_grupo': id_grupo,
+                                            'get_edit_values': 1,
+                                            'id': id
                                         },
+                                        dataType: 'json',
                                         success: function (response) {
-
-                                            $('#name').val('');
-                                            $('#description').val('');
-                                            $('#id').val('');
-                                            $('#id_grupo').val('');
-                                            alert(response);
-
-                                            $('button[title=Atualizar]').click();
+                                            $('#name').val(response[0].nome);
+                                            $('#description').val(response[0].descricao);
+                                            $('#modal_cadastro').show();
                                         }
                                     });
 
-                                    console.log(id);
                                 }
 
                                 function removerDados(id) {
-                                    //implementar função que faz post em ajax para o prod_controller 
-                                    // semelhante ao cadastro acima...
-
-                                    $(document).on('click', '#submit_exc', function () {
-                                        var id = $('#id').val();
-                                        $.ajax({
-                                            url: '../controller/prod_controller.php',
-                                            type: 'POST',
-                                            data: {
-                                                'save': 1,
-                                                'id': id
-                                            },
-                                            success: function (response) {
-                                                $('#id').val('');
-                                                alert(response);
-                                                $('button[title=Atualizar]').click();
-                                            }
-                                        });
+                                   $.ajax({
+                                        url: '../controller/prod_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'remove': 1,
+                                            'id': id
+                                        },
+                                        success: function (response) {
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('button[title=Atualizar]').click();
+                                        }
                                     });
-
-                                    console.log(id);
                                 }
                                 function dadosGrupo() {
                                     $.ajax({
