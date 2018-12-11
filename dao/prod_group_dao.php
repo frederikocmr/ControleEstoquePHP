@@ -23,7 +23,7 @@ class ProdGroupDAO extends Dbconnect {
     //edita dados
     public function editProdGroup($name, $description, $id) {
 
-        $query = "UPDATE  grupo_produto SET nome = '$name', descricao = '$description' WHERE id = '$id'";
+        $query = "UPDATE  grupo_produto SET nome = '$name', descricao = '$description' WHERE id = $id";
 
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
