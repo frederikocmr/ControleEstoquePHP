@@ -3,7 +3,9 @@
 require('../util/fpdf/mysql_table.php');
 
 class PDF extends PDF_MySQL_Table {
+
     private $titulo;
+
     function Header() {
         $this->titulo = $_GET['titulo'];
         $this->SetFont('Arial', '', 18);
@@ -14,14 +16,16 @@ class PDF extends PDF_MySQL_Table {
 
 }
 
-
-
 $link = mysqli_connect('localhost', 'root', '', 'controleestoque');
 
 $pdf = new PDF();
 $pdf->AddPage();
 
-$pdf->Table($link, 'select * from movimentacao');
+$pdf->Table($link, 'SELECT m.id as movimentacao, p.nome produto, m.descricao, s.nome as secao'
+        . ' FROM produto_movimentacao pm '
+        . ' INNER JOIN produto p on p.id = pm.produto_id'
+        . ' INNER JOIN movimentacao m on m.id = pm.movimentacao_id'
+        . ' LEFT JOIN secao s on m.id_secao = s.id');
 
 $pdf->Output();
 ?>

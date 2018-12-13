@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 11-Dez-2018 às 04:11
--- Versão do servidor: 5.7.23
--- versão do PHP: 5.6.38
+-- Generation Time: Dec 13, 2018 at 12:34 PM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `grupo_produto`
+-- Table structure for table `grupo_produto`
 --
 
 DROP TABLE IF EXISTS `grupo_produto`;
@@ -34,59 +34,41 @@ CREATE TABLE IF NOT EXISTS `grupo_produto` (
   `nome` varchar(60) NOT NULL,
   `descricao` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `grupo_produto`
+-- Dumping data for table `grupo_produto`
 --
 
 INSERT INTO `grupo_produto` (`id`, `nome`, `descricao`) VALUES
-(29, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(30, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(31, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(32, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(33, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(34, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(35, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(36, 'lÃ¡pis', 'lÃ¡pis rosa'),
-(37, 'teste', '1256sss'),
-(38, 'teste', '1256sss'),
-(39, 'teste', '1256sss'),
-(40, 'teste', '1256sss'),
-(41, 'teste', '1256sss'),
-(42, 'teste', '1256sss'),
-(43, 'teste', '1256sss'),
-(44, 'teste', '1256sss'),
-(45, '', ''),
-(46, '', ''),
-(47, '', ''),
-(48, '', ''),
-(49, '', ''),
-(50, '', ''),
-(51, '', ''),
-(52, '', '');
+(1, 'Grupo 1', 'grupo 1 teste');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `movimentacao`
+-- Table structure for table `movimentacao`
 --
 
 DROP TABLE IF EXISTS `movimentacao`;
 CREATE TABLE IF NOT EXISTS `movimentacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_produto` int(11) DEFAULT NULL,
   `id_secao` int(11) DEFAULT NULL,
   `descricao` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_produto` (`id_produto`),
   KEY `id_secao` (`id_secao`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `movimentacao`
+--
+
+INSERT INTO `movimentacao` (`id`, `id_secao`, `descricao`) VALUES
+(1, 1, 'Teste');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `produto`
+-- Table structure for table `produto`
 --
 
 DROP TABLE IF EXISTS `produto`;
@@ -97,19 +79,43 @@ CREATE TABLE IF NOT EXISTS `produto` (
   `id_grupo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_grupo` (`id_grupo`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `produto`
+-- Dumping data for table `produto`
 --
 
 INSERT INTO `produto` (`id`, `nome`, `descricao`, `id_grupo`) VALUES
-(5, 'tese', 'sdasd', 44);
+(1, 'Teste Produto', 'Teste prod', 1),
+(2, 'Teste 2 prod', 'nada', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `secao`
+-- Table structure for table `produto_movimentacao`
+--
+
+DROP TABLE IF EXISTS `produto_movimentacao`;
+CREATE TABLE IF NOT EXISTS `produto_movimentacao` (
+  `produto_id` int(11) NOT NULL,
+  `movimentacao_id` int(11) NOT NULL,
+  PRIMARY KEY (`produto_id`,`movimentacao_id`),
+  KEY `fk_produto_movimentacao_movimentacao_id` (`movimentacao_id`),
+  KEY `fk_produto_movimentacao_produto_id` (`produto_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `produto_movimentacao`
+--
+
+INSERT INTO `produto_movimentacao` (`produto_id`, `movimentacao_id`) VALUES
+(1, 1),
+(2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secao`
 --
 
 DROP TABLE IF EXISTS `secao`;
@@ -118,12 +124,19 @@ CREATE TABLE IF NOT EXISTS `secao` (
   `nome` varchar(60) NOT NULL,
   `descricao` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `secao`
+--
+
+INSERT INTO `secao` (`id`, `nome`, `descricao`) VALUES
+(1, 'Secao 1', 'Teste secao 1');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `users`
+-- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -137,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='Tabela de Usuários';
 
 --
--- Extraindo dados da tabela `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `user_type`, `password`) VALUES
@@ -146,6 +159,17 @@ INSERT INTO `users` (`id`, `username`, `email`, `user_type`, `password`) VALUES
 (8, 'anna', 'anna@email.com', 'user', 'e10adc3949ba59abbe56e057f20f883e'),
 (9, 'urubu', 'urubu@enasi.com', 'admin', 'e10adc3949ba59abbe56e057f20f883e'),
 (10, 'Anna Lara', 'annalara1426@gmail.com', 'user', 'e10adc3949ba59abbe56e057f20f883e');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `produto_movimentacao`
+--
+ALTER TABLE `produto_movimentacao`
+  ADD CONSTRAINT `fk_produto_movimentacao_movimentacao_id` FOREIGN KEY (`movimentacao_id`) REFERENCES `movimentacao` (`id`),
+  ADD CONSTRAINT `fk_produto_movimentacao_produto_id` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
