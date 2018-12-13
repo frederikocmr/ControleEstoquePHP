@@ -21,10 +21,10 @@ if (!isAdmin()) {
     <link rel="icon" type="image/png" href="../util/images/favicon.png">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../util/css/bootstrap.min.css">
     <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
     <link rel='stylesheet' href='../util/css/font?family=Open+Sans'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../util/css/font-awesome.min.css">
     <style>
         html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans" , sans-serif !important}
     </style>
