@@ -113,8 +113,8 @@ if (!isLoggedIn()) {
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
                                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:33.3%" ><i class="fa fa-book"></i> Visualizar</button>
-                                        <a class="w3-bar-item w3-button w3-theme-l2" style="width:33.3%" id="rel_btn" href="relatorio.php?titulo=Relatorio Teste"> <i class="fa fa-tasks"></i> Gerar Relatório</a>
-                                        <button class="w3-bar-item w3-button w3-theme-l3" style="width:33.3%" id="cadastrar_btn"><i class="fa fa-plus-square"></i> Cadastrar</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l3" style="width:33.3%" id="relatorio_btn"><i class="fa fa-plus-square"></i> Gerar Relatorio</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:33.3%" id="cadastrar_btn"><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
                                 </div>
@@ -193,7 +193,31 @@ if (!isLoggedIn()) {
                 </footer>
             </div>
         </div>
-
+        <div id="modal_relatorio" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-theme-d1"> 
+                    <span onclick="$('#modal_cadastro').hide()" 
+                          class="w3-button w3-display-topright">&times;</span>
+                    <h2><label id="label_modal">Selecione a Seção</label></h2>
+                </header>
+                <form class="w3-container">
+                    <br>  
+                    <br>
+                    <p>
+                        <label for="id_rel">Seções</label>
+                        <select class="w3-input"   name="id_relatorio" id="id_relatorio">
+                        </select>
+                    </p>  
+                    <br>
+                </form>
+                <footer class="w3-container w3-theme-l1">
+                    <div class="w3-bar">
+                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="$('#modal_relatorio').hide()" ><i class="fa fa-mail-reply"></i> Cancelar</button>
+                        <button  class="w3-bar-item w3-button w3-theme-l1" style="width:50%" id="submit_relatorio_btn" title="Gerar Relatório"><i class="fa fa-plus-square"></i>Gerar</button>
+                    </div>
+                </footer>
+            </div>
+        </div>
         <br>
         <hr class="w3-clear">
         <br>
@@ -211,6 +235,7 @@ if (!isLoggedIn()) {
         <script >
                             $(document).ready(function () {
                                 dadosSecao();
+                                dadosRelatorio();
                                 var $elements = [];
 
                                 var grid = $("#grid-data").bootgrid({
@@ -340,6 +365,27 @@ if (!isLoggedIn()) {
                                         }
                                     });
                                 });
+                                /////////////////////////////////////////////
+                                $(document).on('click', '#relatorio_btn', function () {
+                                    $('#modal_relatorio').show();
+                                });
+
+                                // save comment to database
+                                $(document).on('click', '#submit_relatorio_btn', function () {
+                                    var id_relatorio = $('#id_relatorio').val();
+                                    $.ajax({
+                                        url: '../view/relatorio.php',
+                                        type: 'POST',
+                                        data: {
+                                            'titulo' : "Relatorio",
+                                            'id_relatorio': id_relatorio
+                                        },
+                                        success: function (response) {
+                                            
+                                        }
+                                    });
+                                });
+                                ////////////////////////////////////
 
 
                                 function editarDados(id) {
@@ -397,6 +443,25 @@ if (!isLoggedIn()) {
                                                 html += '<option value="' + val.id + '">' + val.nome + '</option>';
                                             });
                                             $("#id_secao").append(html);
+                                        }
+                                    });
+                                }
+                                function dadosRelatorio() {
+                                    $.ajax({
+                                        url: '../controller/mov_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'dados_relatorio': 1,
+                                        },
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            console.log(response);
+                                            var html = '';
+                                            $.each(response, function (key, val) {
+                                                ;
+                                                html += '<option value="' + val.nome + '">' + val.scnome + '</option>';
+                                            });
+                                            $("#id_relatorio").append(html);
                                         }
                                     });
                                 }

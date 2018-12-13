@@ -118,5 +118,14 @@ class MovDAO extends Dbconnect {
         }
         return $data;
     }
+       public function getDadosRelatorio() {
+        $query = "SELECT m.*, sc.nome scnome FROM movimentacao m LEFT JOIN secao sc ON m.id_secao = sc.id";
+        $result = mysqli_query($this->conn, $query);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
 
 }

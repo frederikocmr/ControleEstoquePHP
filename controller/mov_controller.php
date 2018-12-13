@@ -34,6 +34,10 @@ if(isset($_POST['id']) && ($_POST['id']=="b0df282a-0d67-40e5-8558-c9e93b7befed")
 if (isset ($_POST['dados_secao'])){
     dadosSecao();
 }
+if (isset ($_POST['dados_relatorio'])){
+    dados_relatorio();
+}
+
 /**
  * Essa função pega o movimentacao 
  * @package controller
@@ -111,5 +115,10 @@ function getMov(){
 function dadosSecao(){
     global $movDAO;
     $dados = $movDAO->getDadosSecao();
+    echo json_encode($dados);
+}
+    function dados_relatorio(){
+    global $movDAO;
+    $dados = $movDAO->getDadosRelatorio();
     echo json_encode($dados);
 }
