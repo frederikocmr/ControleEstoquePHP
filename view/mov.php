@@ -128,9 +128,9 @@ if (!isLoggedIn()) {
                             <thead>
                                 <tr class="w3-theme-d1 w3-hover-text-theme">
                                     <th data-column-id="id" data-type="numeric">ID</th>
-                                    <th data-column-id="id_produto" data-type="numeric">Produtos</th>
-                                    <th data-column-id="id_secao" data-type="numeric">Seção</th>
+                                    <th data-column-id="nome" >Produto</th>
                                     <th data-column-id="descricao" >Descrição</th>
+                                    <th data-column-id="secao" >Seção</th>
                                     <th data-column-id="option" data-formatter="option" data-sortable="false">Opções</th>
                                 </tr>
                             </thead>
