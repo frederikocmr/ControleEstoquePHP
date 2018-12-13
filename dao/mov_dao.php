@@ -63,7 +63,11 @@ class MovDAO extends Dbconnect {
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $query = "SELECT * FROM movimentacao";
+        $query = 'SELECT m.id, p.nome, m.descricao, s.nome as secao'
+        . ' FROM produto_movimentacao pm '
+        . ' INNER JOIN produto p on p.id = pm.produto_id'
+        . ' INNER JOIN movimentacao m on m.id = pm.movimentacao_id'
+        . ' LEFT JOIN secao s on m.id_secao = s.id';
         
 
         if (!empty($dados_['searchPhrase'])) {
