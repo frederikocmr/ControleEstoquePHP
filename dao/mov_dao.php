@@ -19,15 +19,29 @@ class MovDAO extends Dbconnect {
 //        $sele = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
 //        return $sele;
 //    }
-
     //insere dados
-//    public function insertProd($name, $description, $id_grupo) {
-//
-//        $query = "INSERT INTO movimentacao (nome, descricao, id_grupo) VALUES ('{$name}', '{$description}', '{$id_grupo}')";
-//
-//        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-//        return mysqli_insert_id($this->conn);
-//    }
+    public function insertMov($description, $id_secao) {
+
+        $query = "INSERT INTO movimentacao ( descricao, id_secao) VALUES ('$description', $id_secao)";
+
+        mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return mysqli_insert_id($this->conn);
+    }
+
+    public function insertMovProdutos($produtos, $id) {
+
+        try {
+            foreach ($produtos as $key => $value) {
+                $query = "INSERT INTO produto_movimentacao ( produto_id, movimentacao_id) VALUES ($value, $id)";
+
+                $ok = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+            }
+        } catch (Exception $e) {
+            return $e;
+        }
+
+        return $ok;
+    }
 
     //edita dados
 //    public function edit($name, $description, $id) {
@@ -37,7 +51,6 @@ class MovDAO extends Dbconnect {
 //        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
 //        return $result;
 //    }
-
     //deleta dados
 //    public function delete($id) {
 //
@@ -64,11 +77,11 @@ class MovDAO extends Dbconnect {
         $start_from = ($current_page_number - 1) * $records_per_page;
 
         $query = 'SELECT m.id, p.nome, m.descricao, s.nome as secao'
-        . ' FROM produto_movimentacao pm '
-        . ' INNER JOIN produto p on p.id = pm.produto_id'
-        . ' INNER JOIN movimentacao m on m.id = pm.movimentacao_id'
-        . ' LEFT JOIN secao s on m.id_secao = s.id';
-        
+                . ' FROM produto_movimentacao pm '
+                . ' INNER JOIN produto p on p.id = pm.produto_id'
+                . ' INNER JOIN movimentacao m on m.id = pm.movimentacao_id'
+                . ' LEFT JOIN secao s on m.id_secao = s.id';
+
 
         if (!empty($dados_['searchPhrase'])) {
             $query .= ' WHERE descricao LIKE "%' . $dados_['searchPhrase'] . '%" ';
@@ -108,7 +121,7 @@ class MovDAO extends Dbconnect {
             'total' => intval($total_records),
             'rows' => $data
         );
-      
+
 
         return $output;
     }
