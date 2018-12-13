@@ -16,6 +16,8 @@ class PDF extends PDF_MySQL_Table {
 
 }
 
+$id_secao = $_GET['id_relatorio'];
+
 $link = mysqli_connect('localhost', 'root', '', 'controleestoque');
 
 $pdf = new PDF();
@@ -25,7 +27,8 @@ $pdf->Table($link, 'SELECT m.id as movimentacao, p.nome produto, m.descricao, s.
         . ' FROM produto_movimentacao pm '
         . ' INNER JOIN produto p on p.id = pm.produto_id'
         . ' INNER JOIN movimentacao m on m.id = pm.movimentacao_id'
-        . ' LEFT JOIN secao s on m.id_secao = s.id');
+        . ' LEFT JOIN secao s on m.id_secao = s.id'
+        . ' WHERE s.id = '.$id_secao);
 
 $pdf->Output();
 ?>

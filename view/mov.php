@@ -373,17 +373,7 @@ if (!isLoggedIn()) {
                                 // save comment to database
                                 $(document).on('click', '#submit_relatorio_btn', function () {
                                     var id_relatorio = $('#id_relatorio').val();
-                                    $.ajax({
-                                        url: '../view/relatorio.php',
-                                        type: 'POST',
-                                        data: {
-                                            'titulo' : "Relatorio",
-                                            'id_relatorio': id_relatorio
-                                        },
-                                        success: function (response) {
-                                            
-                                        }
-                                    });
+                                        window.location.href = "relatorio.php?id_relatorio=" + id_relatorio + "&titulo=Relatorio";
                                 });
                                 ////////////////////////////////////
 
@@ -459,7 +449,7 @@ if (!isLoggedIn()) {
                                             var html = '';
                                             $.each(response, function (key, val) {
                                                 ;
-                                                html += '<option value="' + val.nome + '">' + val.scnome + '</option>';
+                                                html += '<option value="' + val.idsecao+ '">' + val.scnome + '</option>';
                                             });
                                             $("#id_relatorio").append(html);
                                         }
