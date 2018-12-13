@@ -84,13 +84,13 @@ function editSecao() {
     global $SecaoDAO;
     $name = $_POST['name'];
     $description = $_POST['description'];
-
+    $id = $_POST['id'];
 
     if (isset($name) && isset($description) && isset($id)) {
 
-        $id = $SecaoDAO->editSecao($name,$description,$id );
+        $ok = $SecaoDAO->editSecao($name,$description,$id );
  
-        $retorno = ($id >= 1 ? "Editado com sucesso!" : "Erro ao editar !");
+        $retorno = ($ok ? "Item $id Editado com sucesso!" : "Erro ao editar !");
         echo $retorno;
     }
     

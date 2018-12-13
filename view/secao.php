@@ -120,7 +120,7 @@ if (!isAdmin()) {
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
                                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" ><i class="fa fa-book"></i> Visualizar</button>
-                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" onclick="$('#modal_cadastro').show()"><i class="fa fa-plus-square"></i> Cadastrar</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" id="cadastrar_btn" ><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
                                 </div>
@@ -144,6 +144,7 @@ if (!isAdmin()) {
                     </div>
                 </div>
             </div>
+            
         </div>
         <br>
 
@@ -165,11 +166,13 @@ if (!isAdmin()) {
                         <input class="w3-input"  type="text" name="description" id="description">
                     </p>  
                     <br>
+                    <input type="hidden" id="secao_id" name="secao_id" value="">
                 </form>
                 <footer class="w3-container w3-theme-l1">
                     <div class="w3-bar">
                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="$('#modal_cadastro').hide()" ><i class="fa fa-mail-reply"></i> Cancelar</button>
                         <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="submit_btn"><i class="fa fa-check"></i> Cadastrar</button>
+                        <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="edit_btn"><i class="fa fa-check"></i> Atualizar</button>
                     </div>
                 </footer>
             </div>
@@ -215,6 +218,15 @@ if (!isAdmin()) {
                                         removerDados($(this).data("row-id"));
                                     });
                                 });
+                                
+                                $(document).on('click', '#cadastrar_btn', function () {
+                                    $('#submit_btn').show();
+                                    $('#edit_btn').hide();
+                                    $('#label_modal').text('Cadastrar');
+                                    $('#name').val('');
+                                    $('#description').val('');
+                                    $('#modal_cadastro').show();
+                                });
 
 
                                 $(document).on('click', '#submit_btn', function () {
@@ -241,6 +253,34 @@ if (!isAdmin()) {
                                         }
                                     });
                                 });
+                                
+                                    $(document).on('click', '#edit_btn', function () {
+                                    var name = $('#name').val();
+                                    var description = $('#description').val();
+                                    var id = $('#secao_id').val();
+                                    $.ajax({
+                                        url: '../controller/secao_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'edit': 1,
+                                            'name': name,
+                                            'description': description,
+                                            'id': id
+                                        },
+                                        success: function (response) {
+
+                                            $('#name').val('');
+                                            $('#description').val('');
+
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('#modal_cadastro').hide()
+                                            $('button[title=Atualizar]').click();
+                                        }
+                                    });
+                                });
+
 
                                 function editarDados(id) {
 
@@ -253,9 +293,13 @@ if (!isAdmin()) {
                                         },
                                         dataType: 'json',
                                         success: function (response) {
+                                            $('#submit_btn').hide();
+                                            $('#edit_btn').show();
+                                            $('#label_modal').text('Editar');
                                             $('#name').val(response[0].nome);
                                             $('#description').val(response[0].descricao);
-                                            $('#modal_cadastro').show();
+                                            $('#secao_id').val(response[0].id);
+                                            $('#modal_cadastro').show()
                                         }
                                     });
 
