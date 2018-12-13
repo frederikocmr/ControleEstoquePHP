@@ -128,9 +128,9 @@ if (!isLoggedIn()) {
                             <thead>
                                 <tr class="w3-theme-d1 w3-hover-text-theme">
                                     <th data-column-id="id" data-type="numeric">ID</th>
-                                    <th data-column-id="nome">Nome</th>
-                                    <th data-column-id="descricao" data-order="desc">Descrição</th>
-                                    <th data-column-id="gpnome" data-order="desc">Grupo do Produto</th>
+                                    <th data-column-id="id_produto" data-type="numeric">Produtos</th>
+                                    <th data-column-id="id_secao" data-type="numeric">Seção</th>
+                                    <th data-column-id="descricao" >Descrição</th>
                                     <th data-column-id="option" data-formatter="option" data-sortable="false">Opções</th>
                                 </tr>
                             </thead>
@@ -163,19 +163,26 @@ if (!isLoggedIn()) {
                         </select>
                     </p> 
                     <br>
-
-                    <button class="w3-bar-item w3-button w3-theme-l3 w3-right"  onclick="$('#modal_produto').hide()" ><i class="fa fa-plus-square"></i> Adicionar Produtos</button>
-                        <br>
+                    <p><label for="grid-data-prod">Seleção de Produtos</label></p>
+                    <table id="grid-data-prod" class="table table-condensed table-hover table-striped w3-table-all">
+                        <thead>
+                            <tr class="w3-theme-d1 w3-hover-text-theme">
+                                <th data-column-id="id" data-type="numeric">ID</th>
+                                <th data-column-id="nome">Nome</th>
+                                <th data-column-id="descricao" data-order="desc">Descrição</th>
+                                <th data-column-id="option" data-formatter="option" data-sortable="false">Opções</th>
+                            </tr>
+                        </thead>
+                    </table>                    
+                    <br>
                     <label for="id_produto">Produtos Selecionados</label>
-                
-                    <ul class="w3-ul ">
-                        <li class="w3-display-container w3-hover-theme">Jill <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
-                        <li class="w3-display-container w3-hover-theme">Adam <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
-                        <li class="w3-display-container w3-hover-theme">Eve <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+
+                    <ul class="w3-ul" id="some-element">
+
                     </ul>
 
                     <br>
-                    <input type="hidden" id="prod_id" name="prod_id" value="">
+                    <input type="hidden" id="mov_id" name="mov_id" value="">
                 </form>
                 <footer class="w3-container w3-theme-l1">
                     <div class="w3-bar">
@@ -203,7 +210,8 @@ if (!isLoggedIn()) {
 
         <script >
                             $(document).ready(function () {
-                                dadosGrupo();
+                                dadosSecao();
+                                var $elements = [];
 
                                 var grid = $("#grid-data").bootgrid({
                                     ajax: true,
@@ -214,7 +222,7 @@ if (!isLoggedIn()) {
                                             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
                                         };
                                     },
-                                    url: "../controller/prod_controller.php",
+                                    url: "../controller/mov_controller.php",
                                     formatters: {
                                         "option": function (column, row)
                                         {
@@ -232,6 +240,42 @@ if (!isLoggedIn()) {
                                     });
                                 });
 
+                                var grid_secao = $("#grid-data-prod").bootgrid({
+                                    ajax: true,
+                                    post: function ()
+                                    {
+                                        /* To accumulate custom parameter with the request object */
+                                        return {
+                                            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+                                        };
+                                    },
+                                    url: "../controller/prod_controller.php",
+                                    formatters: {
+                                        "option": function (column, row)
+                                        {
+                                            return "<button type=\"button\" class=\"btn btn-xs btn-default option-sel\" data-row-nome=\"" + row.nome + "\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-check\"></span> Adicionar</button> " +
+                                                    "<button type=\"button\" class=\"btn btn-xs btn-default option-del\" data-row-nome=\"" + row.nome + "\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-check\"></span> Remover Todos</button>";
+                                        }
+                                    }
+                                }).on("loaded.rs.jquery.bootgrid", function ()
+                                {
+                                    grid_secao.find(".option-sel").on("click", function (e) {
+                                        $elements.push($(this).data("row-id"));
+                                        console.log($elements);
+                                        $('#some-element').append('<li id="' + $(this).data("row-id") + '" class="w3-display-container w3-hover-theme">' + $(this).data("row-nome") + '<span onclick="removeProd(' + $(this).data("row-id") + ')" class="w3-button w3-transparent w3-display-right">&times;</span></li>');
+                                    }).end().find(".option-del").on("click", function (e) {
+                                        $elements.pop($(this).data("row-id"));
+                                        console.log($elements);
+                                        $('#some-element').children("#" + $(this).data("row-id")).remove();
+                                    });
+                                });
+
+                                function removeProd(id) {
+                                    // TERMINAR
+                                    $elements.pop(id);
+                                    console.log($elements);
+                                }
+
                                 $(document).on('click', '#cadastrar_btn', function () {
                                     $('#submit_btn').show();
                                     $('#edit_btn').hide();
@@ -245,15 +289,15 @@ if (!isLoggedIn()) {
                                 $(document).on('click', '#submit_btn', function () {
                                     var name = $('#name').val();
                                     var description = $('#description').val();
-                                    var id_grupo = $('#id_grupo').val();
+                                    var id_secao = $('#id_secao').val();
                                     $.ajax({
-                                        url: '../controller/prod_controller.php',
+                                        url: '../controller/mov_controller.php',
                                         type: 'POST',
                                         data: {
                                             'save': 1,
                                             'name': name,
                                             'description': description,
-                                            'id_grupo': id_grupo
+                                            'id_secao': id_secao
                                         },
                                         success: function (response) {
                                             $('#name').val('');
@@ -271,16 +315,16 @@ if (!isLoggedIn()) {
                                 $(document).on('click', '#edit_btn', function () {
                                     var name = $('#name').val();
                                     var description = $('#description').val();
-                                    var id_grupo = $('#id_grupo').val();
-                                    var id = $('#prod_id').val();
+                                    var id_secao = $('#id_secao').val();
+                                    var id = $('#mov_id').val();
                                     $.ajax({
-                                        url: '../controller/prod_controller.php',
+                                        url: '../controller/mov_controller.php',
                                         type: 'POST',
                                         data: {
                                             'edit': 1,
                                             'name': name,
                                             'description': description,
-                                            'id_grupo': id_grupo,
+                                            'id_secao': id_secao,
                                             'id': id
                                         },
                                         success: function (response) {
@@ -300,7 +344,7 @@ if (!isLoggedIn()) {
 
                                 function editarDados(id) {
                                     $.ajax({
-                                        url: '../controller/prod_controller.php',
+                                        url: '../controller/mov_controller.php',
                                         type: 'POST',
                                         data: {
                                             'get_edit_values': 1,
@@ -313,7 +357,7 @@ if (!isLoggedIn()) {
                                             $('#label_modal').text('Editar');
                                             $('#name').val(response[0].nome);
                                             $('#description').val(response[0].descricao);
-                                            $('#prod_id').val(response[0].id);
+                                            $('#mov_id').val(response[0].id);
                                             $('#modal_cadastro').show();
                                         }
                                     });
@@ -323,7 +367,7 @@ if (!isLoggedIn()) {
                                 function removerDados(id) {
 
                                     $.ajax({
-                                        url: '../controller/prod_controller.php',
+                                        url: '../controller/mov_controller.php',
                                         type: 'POST',
                                         data: {
                                             'remove': 1,
@@ -338,22 +382,21 @@ if (!isLoggedIn()) {
                                     });
                                 }
 
-                                function dadosGrupo() {
+                                function dadosSecao() {
                                     $.ajax({
-                                        url: '../controller/prod_controller.php',
+                                        url: '../controller/mov_controller.php',
                                         type: 'POST',
                                         data: {
-                                            'dados_grupo': 1,
+                                            'dados_secao': 1
                                         },
                                         dataType: 'json',
                                         success: function (response) {
-                                            console.log(response);
                                             var html = '';
                                             $.each(response, function (key, val) {
                                                 ;
                                                 html += '<option value="' + val.id + '">' + val.nome + '</option>';
                                             });
-                                            $("#id_grupo").append(html);
+                                            $("#id_secao").append(html);
                                         }
                                     });
                                 }
