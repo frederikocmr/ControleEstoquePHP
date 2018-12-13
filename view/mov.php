@@ -286,11 +286,9 @@ if (!isLoggedIn()) {
                                 {
                                     grid_secao.find(".option-sel").on("click", function (e) {
                                         $elements.push($(this).data("row-id"));
-                                        console.log($elements);
                                         $('#some-element').append('<li id="' + $(this).data("row-id") + '" class="w3-display-container w3-hover-theme">' + $(this).data("row-nome") + '<span onclick="removeProd(' + $(this).data("row-id") + ')" class="w3-button w3-transparent w3-display-right">&times;</span></li>');
                                     }).end().find(".option-del").on("click", function (e) {
                                         $elements.pop($(this).data("row-id"));
-                                        console.log($elements);
                                         $('#some-element').children("#" + $(this).data("row-id")).remove();
                                     });
                                 });
@@ -312,7 +310,6 @@ if (!isLoggedIn()) {
 
                                 // save comment to database
                                 $(document).on('click', '#submit_btn', function () {
-                                    var name = $('#name').val();
                                     var description = $('#description').val();
                                     var id_secao = $('#id_secao').val();
                                     $.ajax({
@@ -320,18 +317,19 @@ if (!isLoggedIn()) {
                                         type: 'POST',
                                         data: {
                                             'save': 1,
-                                            'name': name,
+                                            'produtos': $elements,
                                             'description': description,
                                             'id_secao': id_secao
                                         },
                                         success: function (response) {
-                                            $('#name').val('');
+                                            console.log(response);
+                                            $('#id_secao').val('');
                                             $('#description').val('');
 
                                             $('#notificacao').text(response);
                                             $("#div_notificacao").show();
                                             $("#div_notificacao").addClass("w3-animate-zoom");
-                                            $('#modal_cadastro').hide()
+                                            $('#modal_cadastro').hide();
                                             $('button[title=Atualizar]').click();
                                         }
                                     });

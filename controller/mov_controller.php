@@ -7,15 +7,14 @@ $movDAO = new MovDAO();
  * V
  * @package controller
  */
-if(isset($_POST['id']) && ($_POST['id']=="b0df282a-0d67-40e5-8558-c9e93b7befed")){
-    
+if (isset($_POST['id']) && ($_POST['id'] == "b0df282a-0d67-40e5-8558-c9e93b7befed")) {
+
     getMov();
 }
 
-//if (isset($_POST['save'])) {
-//    saveMov();
-//    
-//}
+if (isset($_POST['save'])) {
+    saveMov();
+}
 
 //if (isset ($_POST['dados_movimentacao'])){
 //    dadosMovimentacao();
@@ -31,10 +30,10 @@ if(isset($_POST['id']) && ($_POST['id']=="b0df282a-0d67-40e5-8558-c9e93b7befed")
  * Verificando se existe 'dados_grupo'
  * @package controller
  */
-if (isset ($_POST['dados_secao'])){
+if (isset($_POST['dados_secao'])) {
     dadosSecao();
 }
-if (isset ($_POST['dados_relatorio'])){
+if (isset($_POST['dados_relatorio'])) {
     dados_relatorio();
 }
 
@@ -42,34 +41,40 @@ if (isset ($_POST['dados_relatorio'])){
  * Essa função pega o movimentacao 
  * @package controller
  */
-function getMov(){
+function getMov() {
     global $movDAO;
     $output = $movDAO->getMov($_POST);
-    
+
     echo json_encode($output);
 }
+
 /**
  * Função para salvar o movimentacao 
  * @package controller
  */
-//function saveMov() {
-//    global $movDAO;
-//    $name = $_POST['name'];
-//    $description = $_POST['description'];
-//    $id_grupo = $_POST['id_grupo'];
-//
-//
-//    if (isset($name) && isset($description) && isset($id_grupo)) {
-//
-//        $id = $movDAO->insertMov($name,$description, $id_grupo );
-// 
-//        $retorno = ($id >= 1 ? "Cadastrado com sucesso!" : "Erro ao cadastrar!");
-//        echo $retorno;
-//    } else {
-//        echo "Error: " . mysqli_error($conn);
-//    }
-//    exit();
-//}
+function saveMov() {
+    global $movDAO;
+    $produtos = $_POST['produtos'];
+    $description = $_POST['description'];
+    $id_secao = $_POST['id_secao'];
+
+
+    if (isset($produtos) && isset($description) && isset($id_secao)) {
+
+        $id = $movDAO->insertMov($description, $id_secao);
+
+        if ($id) {
+            $ok = $movDAO->insertMovProdutos($produtos, $id);
+        }
+
+        $retorno = ($ok ? "Cadastrado com sucesso!" : "Erro ao cadastrar!");
+    } else {
+        $retorno = "Erro no cadastro de produtos";
+    }
+    echo $retorno;
+    exit();
+}
+
 /**
  * Função para editar os atricutos do movimentacao
  * @package controller
@@ -112,12 +117,13 @@ function getMov(){
  * Função para recuperar do banco dados do movimentacao e retornar um json
  * @package controller
  */
-function dadosSecao(){
+function dadosSecao() {
     global $movDAO;
     $dados = $movDAO->getDadosSecao();
     echo json_encode($dados);
 }
-    function dados_relatorio(){
+
+function dados_relatorio() {
     global $movDAO;
     $dados = $movDAO->getDadosRelatorio();
     echo json_encode($dados);
