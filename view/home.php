@@ -13,6 +13,7 @@ if (!isAdmin()) {
         <title>Página Inicial Administrador</title>
         <link rel="stylesheet" type="text/css" href="../util/css/style.css">
         <link rel="icon" type="image/png" href="../util/images/favicon.png">
+        <link rel="stylesheet" href="../util/css/w3.css">
         <style>
             .header {
                 background: #003366;
@@ -24,7 +25,7 @@ if (!isAdmin()) {
     </head>
     <body>
         <div class="header">
-            <h2>Admin - Página Inicial</h2>
+            <h2>Página Inicial Administrador</h2>
         </div>
         <div class="content">
             <!-- Notificação -->
@@ -49,10 +50,14 @@ if (!isAdmin()) {
 
                         <small>
                             <i  style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i> 
-                            <br>
-                            <a href="home.php?logout='1'" style="color: red;">sair</a>
-                            &nbsp; <a href="register.php"> + adicionar usuário</a>
                         </small>
+                        <div class="w3-center">
+                            <div class="w3-bar">
+                                <a href="home.php?logout='1'" style="color: red;"><button class="w3-button w3-red">sair</button></a>
+                                <a href="register.php"><button class="w3-button w3-blue">+ adicionar usuário</button></a>
+                                <a href="home_user.php"><button class="w3-button w3-teal">acessar sistema</button></a>
+                            </div>
+                        </div>
 
                     <?php endif ?>
                 </div>

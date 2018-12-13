@@ -10,7 +10,7 @@ if (!isLoggedIn()) {
 ?>
 <!DOCTYPE html>
 <html>
-    <title>Controle de Estoque - Produto</title>
+    <title>Controle de Estoque - Movimentação</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="../util/images/favicon.png">
@@ -28,10 +28,11 @@ if (!isLoggedIn()) {
         <div class="w3-top">
             <div class="w3-bar w3-theme-d2 w3-left-align w3-large" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-                <a href="home.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
-                <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cubes"></i></a>
-                <a href="prod.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
-                <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
+                <a href="home_user.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Controle de Estoque</a>
+                <?php if (isAdmin()) { ?>
+                    <a href="prod_group.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Grupos de Produtos"><i class="fa fa-cubes"></i></a>
+                    <a href="secao.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Seções"><i class="fa fa-tags"></i></a>
+                <?php } ?>                <a href="prod.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Produtos"><i class="fa fa-cube"></i></a>
                 <a href="mov.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Movimentação"><i class="fa fa-mail-forward"></i></a>
                 <a href="home_user.php?logout='1'" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="SAIR">
                     <i class="fa fa-sign-out"></i> SAIR
@@ -67,6 +68,10 @@ if (!isLoggedIn()) {
                                     </small>
                                 </p>
                                 <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i> <?php echo ($_SESSION['user']['email']); ?></p>
+                                <?php if (isAdmin()) { ?>
+                                    <p><i class="fa fa-user-secret fa-fw w3-margin-right w3-text-theme"></i> <a href="home.php">Painel ADMIN</a></p>
+
+                                <?php } ?>
                             </div>
                         </div>
                     <?php endif ?>
@@ -107,8 +112,9 @@ if (!isLoggedIn()) {
                                     <h2 class="w3-text-theme" style="text-shadow:1px 1px 0 #444">Movimentação</h2>
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
-                                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" ><i class="fa fa-book"></i> Visualizar</button>
-                                        <button class="w3-bar-item w3-button w3-theme-l2" style="width:50%" onclick="document.getElementById('id01').style.display = 'block'"><i class="fa fa-plus-square"></i> Cadastrar</button>
+                                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:33.3%" ><i class="fa fa-book"></i> Visualizar</button>
+                                        <a class="w3-bar-item w3-button w3-theme-l2" style="width:33.3%" id="rel_btn" href="relatorio.php"> <i class="fa fa-tasks"></i> Gerar Relatório</a>
+                                        <button class="w3-bar-item w3-button w3-theme-l3" style="width:33.3%" id="cadastrar_btn"><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
                                 </div>
@@ -133,42 +139,51 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </div>
-      
+
         </div>
         <br>
 
-        <div id="id01" class="w3-modal">
+        <div id="modal_cadastro" class="w3-modal">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-theme-d1"> 
-                    <span onclick="document.getElementById('id01').style.display = 'none'" 
+                    <span onclick="$('#modal_cadastro').hide()" 
                           class="w3-button w3-display-topright">&times;</span>
-                    <h2>Cadastrar Movimentação</h2>
+                    <h2><label id="label_modal">Cadastrar</label> Movimentação</h2>
                 </header>
                 <form class="w3-container">
                     <br>
-                        <label for="id_produto">Produto</label>
-                        <select class="w3-input"   name="id_produto" id="id_produto">
-
-                        </select>
-                        <label for="id_secao">Seção</label>
-                        <select class="w3-input"   name="id_secao" id="id_secao">
-
-                        </select>
+                    <p>
+                        <label for="name">Descrição</label>
+                        <input class="w3-input"  type="text" name="description" id="description">
                     </p>  
                     <br>
+                    <p>
+                        <label for="id_produto">Produto</label>
+                        <select class="w3-input"   name="id_produto" id="id_produto">
+                        </select>
+                    </p> 
+                    <br>
+                    <p>
+                        <label for="id_secao">Seção</label>
+                        <select class="w3-input"   name="id_secao" id="id_secao">
+                        </select>
+                    </p> 
+                    <br>
+                    <input type="hidden" id="prod_id" name="prod_id" value="">
                 </form>
                 <footer class="w3-container w3-theme-l1">
                     <div class="w3-bar">
-                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="document.getElementById('id01').style.display = 'none'" ><i class="fa fa-mail-reply"></i> Cancelar</button>
+                        <button class="w3-bar-item w3-button w3-theme-l1" style="width:50%" onclick="$('#modal_cadastro').hide()" ><i class="fa fa-mail-reply"></i> Cancelar</button>
                         <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="submit_btn"><i class="fa fa-check"></i> Cadastrar</button>
+                        <button class="w3-bar-item w3-button w3-theme-d1" style="width:50%" id="edit_btn"><i class="fa fa-check"></i> Atualizar</button>
                     </div>
                 </footer>
             </div>
         </div>
 
-<!--        <footer class="w3-container w3-theme-d5">
-            <p >Criado por Anna Lara e Frederiko Cesar</p>
-        </footer>-->
+        <!--        <footer class="w3-container w3-theme-d5">
+                    <p >Criado por Anna Lara e Frederiko Cesar</p>
+                </footer>-->
 
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>
@@ -205,6 +220,15 @@ if (!isLoggedIn()) {
                                     });
                                 });
 
+                                $(document).on('click', '#cadastrar_btn', function () {
+                                    $('#submit_btn').show();
+                                    $('#edit_btn').hide();
+                                    $('#label_modal').text('Cadastrar');
+                                    $('#name').val('');
+                                    $('#description').val('');
+                                    $('#modal_cadastro').show();
+                                });
+
                                 // save comment to database
                                 $(document).on('click', '#submit_btn', function () {
                                     var name = $('#name').val();
@@ -217,22 +241,53 @@ if (!isLoggedIn()) {
                                             'save': 1,
                                             'name': name,
                                             'description': description,
-                                            'id_grupo': id_grupo,
+                                            'id_grupo': id_grupo
                                         },
                                         success: function (response) {
-
                                             $('#name').val('');
                                             $('#description').val('');
-                                            $('#id_grupo').val('');
-                                            alert(response);
 
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('#modal_cadastro').hide()
                                             $('button[title=Atualizar]').click();
                                         }
                                     });
                                 });
 
+                                $(document).on('click', '#edit_btn', function () {
+                                    var name = $('#name').val();
+                                    var description = $('#description').val();
+                                    var id_grupo = $('#id_grupo').val();
+                                    var id = $('#prod_id').val();
+                                    $.ajax({
+                                        url: '../controller/prod_controller.php',
+                                        type: 'POST',
+                                        data: {
+                                            'edit': 1,
+                                            'name': name,
+                                            'description': description,
+                                            'id_grupo': id_grupo,
+                                            'id': id
+                                        },
+                                        success: function (response) {
+
+                                            $('#name').val('');
+                                            $('#description').val('');
+
+                                            $('#notificacao').text(response);
+                                            $("#div_notificacao").show();
+                                            $("#div_notificacao").addClass("w3-animate-zoom");
+                                            $('#modal_cadastro').hide()
+                                            $('button[title=Atualizar]').click();
+                                        }
+                                    });
+                                });
+
+
                                 function editarDados(id) {
-                                     $.ajax({
+                                    $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
@@ -241,8 +296,12 @@ if (!isLoggedIn()) {
                                         },
                                         dataType: 'json',
                                         success: function (response) {
+                                            $('#submit_btn').hide();
+                                            $('#edit_btn').show();
+                                            $('#label_modal').text('Editar');
                                             $('#name').val(response[0].nome);
                                             $('#description').val(response[0].descricao);
+                                            $('#prod_id').val(response[0].id);
                                             $('#modal_cadastro').show();
                                         }
                                     });
@@ -250,7 +309,8 @@ if (!isLoggedIn()) {
                                 }
 
                                 function removerDados(id) {
-                                   $.ajax({
+
+                                    $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
@@ -265,12 +325,13 @@ if (!isLoggedIn()) {
                                         }
                                     });
                                 }
-                                function dadosProduto() {
+
+                                function dadosGrupo() {
                                     $.ajax({
-                                        url: '../controller/mov_controller.php',
+                                        url: '../controller/prod_controller.php',
                                         type: 'POST',
                                         data: {
-                                            'dados_produto': 1,
+                                            'dados_grupo': 1,
                                         },
                                         dataType: 'json',
                                         success: function (response) {
@@ -280,26 +341,7 @@ if (!isLoggedIn()) {
                                                 ;
                                                 html += '<option value="' + val.id + '">' + val.nome + '</option>';
                                             });
-                                            $("#id_produto").append(html);
-                                        }
-                                    });
-                                }
-                                function dadosSecao() {
-                                    $.ajax({
-                                        url: '../controller/mov_controller.php',
-                                        type: 'POST',
-                                        data: {
-                                            'dados_secao': 1,
-                                        },
-                                        dataType: 'json',
-                                        success: function (response) {
-                                            console.log(response);
-                                            var html = '';
-                                            $.each(response, function (key, val) {
-                                                ;
-                                                html += '<option value="' + val.id + '">' + val.nome + '</option>';
-                                            });
-                                            $("#id_secao").append(html);
+                                            $("#id_grupo").append(html);
                                         }
                                     });
                                 }
