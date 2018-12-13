@@ -12,9 +12,11 @@ if (!isLoggedIn()) {
     <title>Controle de Estoque</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png"  href="../util/images/favicon.png">
+    <link rel="icon" type="image/png" href="../util/images/favicon.png">
     <link rel="stylesheet" href="../util/css/w3.css">
     <link rel="stylesheet" href="../util/css/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="../util/css/bootstrap.min.css">
+    <link rel='stylesheet' href='../util/bootgrid/jquery.bootgrid.min.css'>
     <link rel='stylesheet' href='../util/css/font?family=Open+Sans'>
     <link rel="stylesheet" href="../util/css/font-awesome.min.css">
     <style>
@@ -54,10 +56,10 @@ if (!isLoggedIn()) {
                 <div class="w3-col m3">
                     <!-- Profile --> 
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <div class="w3-card w3-round w3-white w3-animate-left">
+                        <div class="w3-card w3-round w3-white">
                             <div class="w3-container">
                                 <h4 class="w3-center"><strong>Bem Vindo!</strong></h4>
-                                <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                                <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-round-xxlarge" style="height:106px;width:106px" alt="Avatar"></p>
                                 <hr>
                                 <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i> 
                                     <?php echo ucfirst($_SESSION['user']['username']); ?><small>
@@ -82,7 +84,7 @@ if (!isLoggedIn()) {
                         <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-theme-l3 w3-display-topright">
                             <i class="fa fa-remove"></i>
                         </span>
-                        <p><strong>Notificações</strong></p>
+                        <p class="w3-margin-top"><strong>Notificações</strong></p>
 
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="error success" >
@@ -113,8 +115,8 @@ if (!isLoggedIn()) {
                                     <div class="w3-third w3-container w3-margin-bottom w3-animate-right "  >
                                         <a href="prod_group.php"><img src="../util/images/boxes.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover" ></a>
                                         <div class="w3-container w3-white w3-theme-shadow" >
-                                            <p><b>Grupos de Produtos</b></p>
-                                            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                            <p class="w3-margin-top"><b>Grupos de Produtos</b></p>
+                                            <p style="text-align: justify">Classificação dos produtos segundo suas características comuns, como, por exemplo, padrões de forma, peso, tipo, uso, dimensão entre outros.</p>
                                         </div>
                                     </div>
 
@@ -123,15 +125,15 @@ if (!isLoggedIn()) {
                                     <a href="prod.php"><img src="../util/images/boxes2.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover"></a>
 
                                     <div class="w3-container w3-white w3-theme-shadow">
-                                        <p><b>Produtos</b></p>
-                                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                        <p class="w3-margin-top"><b>Produtos</b></p>
+                                        <p style="text-align: justify">O cadastro de Produtos contém as principais informações sobre produtos e serviços adquiridos, fabricados ou fornecidos pela empresa.</p>
                                     </div>
                                 </div>
                                 <div class="w3-third w3-container w3-animate-right">
                                     <a href="prod.php"><img src="../util/images/boxes4.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity w3-theme-shadow w3-theme-hover"></a>
                                     <div class="w3-container w3-white w3-theme-shadow">
-                                        <p><b>Movimentação</b></p>
-                                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                        <p class="w3-margin-top"><b>Movimentação</b></p>
+                                        <p style="text-align: justify">Possui cadastro e visualização que permite localizar uma determinada movimentação de acordo com as informações fornecidas.</p>
                                     </div>
                                 </div>
                             </div>
@@ -150,14 +152,11 @@ if (!isLoggedIn()) {
         <hr class="w3-clear">
         <br>
         <hr class="w3-clear">
-        <footer class="w3-container w3-theme-d5">
-            <p>Criado por Anna Lara e Frederiko Cesar</p>
+        <footer class="page-footer font-small blue w3-animate-fading">
+            <div class="footer-copyright text-center py-3">Criado por:
+                <a href="https://github.com/frederikocmr/controleestoque">Anna Lara e Frederiko</a>
+            </div>
         </footer>
-
-        <script>
-
-        </script>
-
     </body>
 </html> 
 

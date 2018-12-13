@@ -61,10 +61,10 @@ if (!isAdmin()) {
                 <div class="w3-col m3">
                     <!-- Profile --> 
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <div class="w3-card w3-round w3-white w3-animate-left">
+                        <div class="w3-card w3-round w3-white">
                             <div class="w3-container">
                                 <h4 class="w3-center"><strong>Bem Vindo!</strong></h4>
-                                <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                                <p class="w3-center"><img src="../util/images/avatar3.png" class="w3-round-xxlarge" style="height:106px;width:106px" alt="Avatar"></p>
                                 <hr>
                                 <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i> 
                                     <?php echo ucfirst($_SESSION['user']['username']); ?><small>
@@ -179,9 +179,15 @@ if (!isAdmin()) {
             </div>
         </div>
 
-        <!--        <footer class="w3-container w3-theme-d5">
-                    <p >Criado por Anna Lara e Frederiko Cesar</p>
-                </footer>-->
+        <br>
+        <hr class="w3-clear">
+        <br>
+        <hr class="w3-clear">
+        <footer class="page-footer font-small blue w3-animate-fading">
+            <div class="footer-copyright text-center py-3">Criado por:
+                <a href="https://github.com/frederikocmr/controleestoque">Anna Lara e Frederiko</a>
+            </div>
+        </footer>
 
         <script src="../util/js/jquery-3.3.1.min.js"></script>
         <script src="../util/js/bootstrap.min.js"></script>
