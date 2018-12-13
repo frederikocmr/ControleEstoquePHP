@@ -113,7 +113,7 @@ if (!isLoggedIn()) {
                                     <hr class="w3-clear">
                                     <div class="w3-bar">
                                         <button class="w3-bar-item w3-button w3-theme-l1" style="width:33.3%" ><i class="fa fa-book"></i> Visualizar</button>
-                                        <a class="w3-bar-item w3-button w3-theme-l2" style="width:33.3%" id="rel_btn" href="relatorio.php"> <i class="fa fa-tasks"></i> Gerar Relatório</a>
+                                        <a class="w3-bar-item w3-button w3-theme-l2" style="width:33.3%" id="rel_btn" href="relatorio.php?titulo=Relatorio Teste"> <i class="fa fa-tasks"></i> Gerar Relatório</a>
                                         <button class="w3-bar-item w3-button w3-theme-l3" style="width:33.3%" id="cadastrar_btn"><i class="fa fa-plus-square"></i> Cadastrar</button>
                                     </div>
                                     <hr class="w3-clear">
@@ -158,16 +158,22 @@ if (!isLoggedIn()) {
                     </p>  
                     <br>
                     <p>
-                        <label for="id_produto">Produto</label>
-                        <select class="w3-input"   name="id_produto" id="id_produto">
-                        </select>
-                    </p> 
-                    <br>
-                    <p>
                         <label for="id_secao">Seção</label>
                         <select class="w3-input"   name="id_secao" id="id_secao">
                         </select>
                     </p> 
+                    <br>
+
+                    <button class="w3-bar-item w3-button w3-theme-l3 w3-right"  onclick="$('#modal_produto').hide()" ><i class="fa fa-plus-square"></i> Adicionar Produtos</button>
+                        <br>
+                    <label for="id_produto">Produtos Selecionados</label>
+                
+                    <ul class="w3-ul ">
+                        <li class="w3-display-container w3-hover-theme">Jill <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+                        <li class="w3-display-container w3-hover-theme">Adam <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+                        <li class="w3-display-container w3-hover-theme">Eve <span onclick="this.parentElement.style.display = 'none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+                    </ul>
+
                     <br>
                     <input type="hidden" id="prod_id" name="prod_id" value="">
                 </form>
