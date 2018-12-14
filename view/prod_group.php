@@ -157,14 +157,16 @@ if (!isAdmin()) {
                     <h2><label id="label_modal">Cadastrar</label> Grupo de Produto</h2>
                 </header>
                 <form class="w3-container">
-                    <br>
+                    <br>                 
+                    <div id="erro_campos" class="w3-panel" style="display: none;color: red;">
+                    </div> 
                     <p>
                         <label for="name">Nome</label>
-                        <input class="w3-input"  type="text" name="name" id="name">
+                        <input class="w3-input"  type="text" name="name" id="name" >
                     </p>     
                     <p>
                         <label for="name">Descrição</label>
-                        <input class="w3-input"  type="text" name="description" id="description">
+                        <input class="w3-input"  type="text" name="description" id="description" required >
                     </p>  
                     <br>
                     <input type="hidden" id="prod_group_id" name="prod_group_id" value="">
@@ -232,26 +234,38 @@ if (!isAdmin()) {
                                 $(document).on('click', '#submit_btn', function () {
                                     var name = $('#name').val();
                                     var description = $('#description').val();
-                                    $.ajax({
-                                        url: '../controller/prod_group_controller.php',
-                                        type: 'POST',
-                                        data: {
-                                            'save': 1,
-                                            'name': name,
-                                            'description': description
-                                        },
-                                        success: function (response) {
+                                    var existeErro = false;
 
-                                            $('#name').val('');
-                                            $('#description').val('');
+                                    //Validação dos campos
+                                    
+                                    existeErro = (name.length < 1 ? true : false);
+                                    existeErro = (description.length < 1 ? true : false);
 
-                                            $('#notificacao').text(response);
-                                            $("#div_notificacao").show();
-                                            $("#div_notificacao").addClass("w3-animate-zoom");
-                                            $('#modal_cadastro').hide()
-                                            $('button[title=Atualizar]').click();
-                                        }
-                                    });
+                                    if (!existeErro) {
+                                        $.ajax({
+                                            url: '../controller/prod_group_controller.php',
+                                            type: 'POST',
+                                            data: {
+                                                'save': 1,
+                                                'name': name,
+                                                'description': description
+                                            },
+                                            success: function (response) {
+
+                                                $('#name').val('');
+                                                $('#description').val('');
+
+                                                $('#notificacao').text(response);
+                                                $("#div_notificacao").show();
+                                                $("#div_notificacao").addClass("w3-animate-zoom");
+                                                $('#modal_cadastro').hide()
+                                                $('button[title=Atualizar]').click();
+                                            }
+                                        });
+                                    } else {
+                                        $('#erro_campos').text("Campos obrigatórios não preenchidos.");
+                                        $('#erro_campos').show();
+                                    }
                                 });
 
                                 $(document).on('click', '#edit_btn', function () {
