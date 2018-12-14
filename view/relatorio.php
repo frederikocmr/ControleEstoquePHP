@@ -1,5 +1,14 @@
 <?php
 
+/*
+ *  @copyright  Copyright 2018 
+ *  @author Frederiko Cesar Moreira Ribeiro
+ *  @author Anna Lara Moraes Caixeta
+ *  @version 1
+ *  @link https://github.com/frederikocmr/controleestoque GitHub
+ */
+
+
 require('../util/fpdf/mysql_table.php');
 
 class PDF extends PDF_MySQL_Table {
