@@ -447,7 +447,7 @@ if (!isLoggedIn()) {
                                             var html = '';
                                             $.each(response, function (key, val) {
                                                 ;
-                                                html += '<option value="' + val.idsecao+ '">' + val.scnome + '</option>';
+                                                html += '<option value="' + val.id + '">' + val.nome + '</option>';
                                             });
                                             $("#id_relatorio").append(html);
                                         }
