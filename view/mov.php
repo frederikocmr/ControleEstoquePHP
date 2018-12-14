@@ -196,7 +196,7 @@ if (!isLoggedIn()) {
         <div id="modal_relatorio" class="w3-modal">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-theme-d1"> 
-                    <span onclick="$('#modal_cadastro').hide()" 
+                    <span onclick="$('#modal_relatorio').hide()" 
                           class="w3-button w3-display-topright">&times;</span>
                     <h2><label id="label_modal">Selecione a Seção</label></h2>
                 </header>

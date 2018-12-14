@@ -22,7 +22,15 @@ $link = mysqli_connect('localhost', 'root', '', 'controleestoque');
 
 $pdf = new PDF();
 $pdf->AddPage();
+if ($id_secao == NULL){
+    $pdf->Table($link, 'SELECT m.id as movimentacao, p.nome produto, m.descricao, s.nome as secao'
+        . ' FROM produto_movimentacao pm '
+        . ' INNER JOIN produto p on p.id = pm.produto_id'
+        . ' INNER JOIN movimentacao m on m.id = pm.movimentacao_id'
+        . ' LEFT JOIN secao s on m.id_secao = s.id');
 
+$pdf->Output();
+}
 $pdf->Table($link, 'SELECT m.id as movimentacao, p.nome produto, m.descricao, s.nome as secao'
         . ' FROM produto_movimentacao pm '
         . ' INNER JOIN produto p on p.id = pm.produto_id'
