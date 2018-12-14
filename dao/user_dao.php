@@ -24,7 +24,10 @@ class UserDAO extends Dbconnect {
         $sele = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
         return $sele;
     }
-
+/**
+ * Função para inserir os dados no banco de dados.
+ * @package dao
+ */
     public function insertUser($username, $email, $user_type, $password) {
 
         $query = " INSERT INTO users (username, email, user_type, password) "
@@ -33,8 +36,10 @@ class UserDAO extends Dbconnect {
         mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return mysqli_insert_id($this->conn);
     }
-
-    // Retorna os dados do usuário de acordo com ID informado
+/**
+ * Função que retorna os dados do usuário de acordo com ID informado
+ * @package dao
+ */
     public function getUserById($id) {
         $query = " SELECT * FROM users WHERE id=" . $id;
         $result = mysqli_query($this->conn, $query);
@@ -42,12 +47,18 @@ class UserDAO extends Dbconnect {
         $user = mysqli_fetch_assoc($result);
         return $user;
     }
-
+/**
+ * Função que retorn o usuario e a senha
+ * @package dao
+ */
     public function getUser($username, $password) {
         $query = " SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1 ";
         return mysqli_query($this->conn, $query);
     }
-    
+    /**
+ * Função que verifica se existe
+ * @package dao
+ */
     public function checkIfUserExists($username) {
         $query = " SELECT * FROM users WHERE username='$username' LIMIT 1 ";
         return mysqli_query($this->conn, $query);
