@@ -152,6 +152,8 @@ if (!isLoggedIn()) {
                 </header>
                 <form class="w3-container">
                     <br>
+                    <div id="erro_campos" class="w3-panel" style="display: none;color: red;">
+                    </div> 
                     <p>
                         <label for="name">Descrição</label>
                         <input class="w3-input"  type="text" name="description" id="description">
@@ -312,6 +314,15 @@ if (!isLoggedIn()) {
                                 $(document).on('click', '#submit_btn', function () {
                                     var description = $('#description').val();
                                     var id_secao = $('#id_secao').val();
+                                    
+                                    var existeErro = false;
+                                    
+                                    //Validação dos campos
+                                    
+                                    existeErro = (name.length < 1 ? true : false);
+                                    existeErro = (description.length < 1 ? true : false);
+
+                                    if (!existeErro) {
                                     $.ajax({
                                         url: '../controller/mov_controller.php',
                                         type: 'POST',
@@ -332,7 +343,10 @@ if (!isLoggedIn()) {
                                             $('#modal_cadastro').hide();
                                             $('button[title=Atualizar]').click();
                                         }
-                                    });
+                                    })}else{
+                                        $('#erro_campos').text("Campos obrigatórios não preenchidos.");
+                                        $('#erro_campos').show();
+                                    };
                                 });
 
                                 $(document).on('click', '#edit_btn', function () {

@@ -151,6 +151,8 @@ if (!isLoggedIn()) {
                 </header>
                 <form class="w3-container">
                     <br>
+                    <div id="erro_campos" class="w3-panel" style="display: none;color: red;">
+                    </div> 
                     <p>
                         <label for="name">Nome</label>
                         <input class="w3-input"  type="text" name="name" id="name">
@@ -237,6 +239,15 @@ if (!isLoggedIn()) {
                                     var name = $('#name').val();
                                     var description = $('#description').val();
                                     var id_grupo = $('#id_grupo').val();
+                                    
+                                    var existeErro = false;
+                                    
+                                    //Validação dos campos
+                                    
+                                    existeErro = (name.length < 1 ? true : false);
+                                    existeErro = (description.length < 1 ? true : false);
+
+                                    if (!existeErro) {
                                     $.ajax({
                                         url: '../controller/prod_controller.php',
                                         type: 'POST',
@@ -257,6 +268,10 @@ if (!isLoggedIn()) {
                                             $('button[title=Atualizar]').click();
                                         }
                                     });
+                                }else {
+                                        $('#erro_campos').text("Campos obrigatórios não preenchidos.");
+                                        $('#erro_campos').show();
+                                    }
                                 });
 
                                 $(document).on('click', '#edit_btn', function () {
