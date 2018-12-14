@@ -206,6 +206,7 @@ if (!isLoggedIn()) {
                     <p>
                         <label for="id_rel">Seções</label>
                         <select class="w3-input"   name="id_relatorio" id="id_relatorio">
+                            <option value="">Todos</option>
                         </select>
                     </p>  
                     <br>
