@@ -84,7 +84,9 @@ class MovDAO extends Dbconnect {
 
 
         if (!empty($dados_['searchPhrase'])) {
-            $query .= ' WHERE descricao LIKE "%' . $dados_['searchPhrase'] . '%" ';
+            $query .= ' WHERE m.descricao LIKE "%' . $dados_['searchPhrase'] . '%" '
+                     . ' OR s.nome LIKE "%' . $dados_['searchPhrase'] . '%" '
+                    . ' OR p.nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
         }
 
         $orderBy = '';
