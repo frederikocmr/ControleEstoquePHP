@@ -5,18 +5,20 @@ include 'dbconnect.php';
 class ProdDAO extends Dbconnect {
 
     private $conn;
-/**
- * Construtor
- * @package dao
- */
+
+    /**
+     * Construtor
+     * @package dao
+     */
     public function __construct() {
         $dbcon = new parent();
         $this->conn = $dbcon->connect();
     }
-/**
- * Função seleciona todos os elementos da tabela 
- * @package dao
- */
+
+    /**
+     * Função seleciona todos os elementos da tabela 
+     * @package dao
+     */
     public function select($table, $where = '', $other = '') {
         if ($where != '') {
             $where = 'where ' . $where;
@@ -26,10 +28,10 @@ class ProdDAO extends Dbconnect {
         return $sele;
     }
 
-/**
- * Função que insere os dados na tabela
- * @package dao
- */
+    /**
+     * Função que insere os dados na tabela
+     * @package dao
+     */
     public function insertProd($name, $description, $id_grupo) {
 
         $query = "INSERT INTO produto (nome, descricao, id_grupo) VALUES ('{$name}', '{$description}', '{$id_grupo}')";
@@ -38,10 +40,10 @@ class ProdDAO extends Dbconnect {
         return mysqli_insert_id($this->conn);
     }
 
-/**
- * Função edita os dados
- * @package dao
- */
+    /**
+     * Função edita os dados
+     * @package dao
+     */
     public function editProd($name, $description, $id, $id_grupo) {
 
         $query = "UPDATE  produto SET nome = '$name', descricao = '$description', id_grupo = $id_grupo WHERE id = $id";
@@ -50,10 +52,10 @@ class ProdDAO extends Dbconnect {
         return $result;
     }
 
-/**
- * Função para excluir o dado de acordo com o id
- * @package dao
- */
+    /**
+     * Função para excluir o dado de acordo com o id
+     * @package dao
+     */
     public function delete($id) {
 
         $query = "DELETE FROM produto WHERE id = $id";
@@ -61,26 +63,21 @@ class ProdDAO extends Dbconnect {
         $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
         return $result;
     }
-/**
- * Função que pega os dados do produto
- * @package dao
- */
+
+    /**
+     * Função que pega os dados do produto
+     * @package dao
+     */
     public function getProd($dados_) {
         $data = array();
         $records_per_page = 10;
         $start_from = 0;
         $current_page_number = 0;
-/**
- * verifica se existe 'rowCouns'
- * @package dao
- */
+
         if (isset($dados_['rowCount'])) {
             $records_per_page = $dados_['rowCount'];
         }
-/**
- * verifica se existe 'current'
- * @package dao
- */
+
         if (isset($dados_['current'])) {
             $current_page_number = $dados_['current'];
         }
@@ -88,19 +85,15 @@ class ProdDAO extends Dbconnect {
         $start_from = ($current_page_number - 1) * $records_per_page;
 
         $query = " SELECT p.*, gp.nome gpnome FROM produto p LEFT JOIN grupo_produto gp ON p.id_grupo = gp.id ";
-/**
- * verifica se esta vazio 'searchPhrase'
- * @package dao
- */
+
         if (!empty($dados_['searchPhrase'])) {
-            $query .= ' WHERE p.nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
+            $query .= ' WHERE p.nome LIKE "%' . $dados_['searchPhrase'] . '%" '
+                    . ' OR p.descricao LIKE "%' . $dados_['searchPhrase'] . '%" '
+                    . ' OR gp.nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
         }
 
         $orderBy = '';
-/**
- * verifica se existe  'sort'
- * @package dao
- */
+
         if (isset($dados_['sort']) && is_array($dados_['sort'])) {
             foreach ($dados_['sort'] as $key => $value) {
                 $orderBy .= `$key $value, `;
@@ -108,10 +101,7 @@ class ProdDAO extends Dbconnect {
         } else {
             $query .= ' ORDER BY p.id DESC ';
         }
-/**
- * verifica se esta ordenado 
- * @package dao
- */
+
         if ($orderBy != '') {
             $query .= ' ORDER BY ' . substr($orderBy, 0, -2);
         }
@@ -139,10 +129,11 @@ class ProdDAO extends Dbconnect {
 
         return $output;
     }
+
     /**
- * Função retorna os dados em um array
- * @package dao
- */
+     * Função retorna os dados em um array
+     * @package dao
+     */
     public function getProdById($id) {
         $query = " SELECT * FROM produto WHERE id = $id";
         $result = mysqli_query($this->conn, $query);
@@ -151,10 +142,11 @@ class ProdDAO extends Dbconnect {
         }
         return $data;
     }
-/**
- * Função retorn dados em um array
- * @package dao
- */
+
+    /**
+     * Função retorn dados em um array
+     * @package dao
+     */
     public function getDadosGrupo() {
         $query = "SELECT * FROM grupo_produto";
         $result = mysqli_query($this->conn, $query);

@@ -72,7 +72,8 @@ class SecaoDAO extends Dbconnect {
         $query = " SELECT * FROM secao ";
 
         if (!empty($dados_['searchPhrase'])) {
-            $query .= ' WHERE nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
+            $query .= ' WHERE nome LIKE "%' . $dados_['searchPhrase'] . '%" '
+                     . ' OR descricao LIKE "%' . $dados_['searchPhrase'] . '%" ';
         }
 
         $orderBy = '';

@@ -72,7 +72,8 @@ class ProdGroupDAO extends Dbconnect {
         $query = " SELECT * FROM grupo_produto ";
 
         if (!empty($dados_['searchPhrase'])) {
-            $query .= ' WHERE nome LIKE "%' . $dados_['searchPhrase'] . '%" ';
+            $query .= ' WHERE nome LIKE "%' . $dados_['searchPhrase'] . '%" '
+                    . ' OR descricao LIKE "%' . $dados_['searchPhrase'] . '%" ';
         }
 
         $orderBy = '';
