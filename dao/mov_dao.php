@@ -44,21 +44,46 @@ class MovDAO extends Dbconnect {
     }
 
     //edita dados
-//    public function edit($name, $description, $id) {
-//
-//        $query = "UPDATE  movimentacao SET nome = '$name', descricao = '$description' WHERE id = '$id'";
-//
-//        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-//        return $result;
-//    }
+    public function editMov($description, $id_secao, $id) {
+
+        $query = "UPDATE  movimentacao SET descricao = '$name', id_secao = $id_secao WHERE id = $id";
+
+        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        return $result;
+    }
+    
+    public function editMovProdutos($produtos, $id) {
+        
+        try {
+            $query1 = "DELETE FROM produto_movimentacao WHERE movimentacao_id = $id";
+            $ok = mysqli_query($this->conn, $query1) or die(mysqli_error($this->conn));
+            
+            foreach ($produtos as $key => $value) {
+                $query = "INSERT INTO produto_movimentacao ( produto_id, movimentacao_id) VALUES ($value, $id)";
+
+                $ok = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+            }
+        } catch (Exception $e) {
+            return $e;
+        }
+
+        return $ok;
+    }
+    
     //deleta dados
-//    public function delete($id) {
-//
-//        $query = "DELETE FROM movimentacao WHERE id = '$id'";
-//
-//        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
-//        return $result;
-//    }
+    public function delete($id) {
+
+        $query1 = "DELETE FROM produto_movimentacao WHERE movimentacao_id = $id";
+
+        $result1 = mysqli_query($this->conn, $query1) or die(mysqli_error($this->conn));
+        
+        $query2 = "DELETE FROM movimentacao WHERE id = $id";
+
+        $result2 = mysqli_query($this->conn, $query2) or die(mysqli_error($this->conn));
+        
+        
+        return ($result1 && $result2);
+    }
 
     public function getMov($dados_) {
         $data = array();
@@ -124,8 +149,16 @@ class MovDAO extends Dbconnect {
             'rows' => $data
         );
 
-
         return $output;
+    }
+    
+    public function getMovById($id) {
+        $query = " SELECT * FROM movimentacao WHERE id = $id";
+        $result = mysqli_query($this->conn, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
     }
 
     public function getDadosSecao() {

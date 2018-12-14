@@ -302,6 +302,7 @@ if (!isLoggedIn()) {
                                 }
 
                                 $(document).on('click', '#cadastrar_btn', function () {
+                                    $elements = [];
                                     $('#submit_btn').show();
                                     $('#edit_btn').hide();
                                     $('#label_modal').text('Cadastrar');
@@ -314,68 +315,81 @@ if (!isLoggedIn()) {
                                 $(document).on('click', '#submit_btn', function () {
                                     var description = $('#description').val();
                                     var id_secao = $('#id_secao').val();
-                                    
+
                                     var existeErro = false;
-                                    
+
                                     //Validação dos campos
-                                    
+
                                     existeErro = (name.length < 1 ? true : false);
                                     existeErro = (description.length < 1 ? true : false);
+                                    existeErro = ($elements.length < 1 ? true : false);
 
                                     if (!existeErro) {
-                                    $.ajax({
-                                        url: '../controller/mov_controller.php',
-                                        type: 'POST',
-                                        data: {
-                                            'save': 1,
-                                            'produtos': $elements,
-                                            'description': description,
-                                            'id_secao': id_secao
-                                        },
-                                        success: function (response) {
-                                            console.log(response);
-                                            $('#id_secao').val('');
-                                            $('#description').val('');
+                                        $.ajax({
+                                            url: '../controller/mov_controller.php',
+                                            type: 'POST',
+                                            data: {
+                                                'save': 1,
+                                                'produtos': $elements,
+                                                'description': description,
+                                                'id_secao': id_secao
+                                            },
+                                            success: function (response) {
+                                                console.log(response);
+                                                $('#id_secao').val('');
+                                                $('#description').val('');
 
-                                            $('#notificacao').text(response);
-                                            $("#div_notificacao").show();
-                                            $("#div_notificacao").addClass("w3-animate-zoom");
-                                            $('#modal_cadastro').hide();
-                                            $('button[title=Atualizar]').click();
-                                        }
-                                    })}else{
+                                                $('#notificacao').text(response);
+                                                $("#div_notificacao").show();
+                                                $("#div_notificacao").addClass("w3-animate-zoom");
+                                                $('#modal_cadastro').hide();
+                                                $('button[title=Atualizar]').click();
+                                            }
+                                        })
+                                    } else {
                                         $('#erro_campos').text("Campos obrigatórios não preenchidos.");
                                         $('#erro_campos').show();
-                                    };
+                                    }
+                                    ;
                                 });
 
                                 $(document).on('click', '#edit_btn', function () {
-                                    var name = $('#name').val();
                                     var description = $('#description').val();
                                     var id_secao = $('#id_secao').val();
                                     var id = $('#mov_id').val();
-                                    $.ajax({
-                                        url: '../controller/mov_controller.php',
-                                        type: 'POST',
-                                        data: {
-                                            'edit': 1,
-                                            'name': name,
-                                            'description': description,
-                                            'id_secao': id_secao,
-                                            'id': id
-                                        },
-                                        success: function (response) {
 
-                                            $('#name').val('');
-                                            $('#description').val('');
+                                    var existeErro = false;
 
-                                            $('#notificacao').text(response);
-                                            $("#div_notificacao").show();
-                                            $("#div_notificacao").addClass("w3-animate-zoom");
-                                            $('#modal_cadastro').hide()
-                                            $('button[title=Atualizar]').click();
-                                        }
-                                    });
+                                    //Validação dos campos
+
+                                    existeErro = (name.length < 1 ? true : false);
+                                    existeErro = (description.length < 1 ? true : false);
+                                    existeErro = ($elements.length < 1 ? true : false);
+
+                                    if (!existeErro) {
+                                        $.ajax({
+                                            url: '../controller/mov_controller.php',
+                                            type: 'POST',
+                                            data: {
+                                                'edit': 1,
+                                                'produtos': $elements,
+                                                'description': description,
+                                                'id_secao': id_secao,
+                                                'id': id
+                                            },
+                                            success: function (response) {
+
+                                                $('#name').val('');
+                                                $('#description').val('');
+
+                                                $('#notificacao').text(response);
+                                                $("#div_notificacao").show();
+                                                $("#div_notificacao").addClass("w3-animate-zoom");
+                                                $('#modal_cadastro').hide()
+                                                $('button[title=Atualizar]').click();
+                                            }
+                                        });
+                                    }
                                 });
                                 /////////////////////////////////////////////
                                 $(document).on('click', '#relatorio_btn', function () {
@@ -385,12 +399,13 @@ if (!isLoggedIn()) {
                                 // save comment to database
                                 $(document).on('click', '#submit_relatorio_btn', function () {
                                     var id_relatorio = $('#id_relatorio').val();
-                                        window.location.href = "relatorio.php?id_relatorio=" + id_relatorio + "&titulo=Relatorio";
+                                    window.location.href = "relatorio.php?id_relatorio=" + id_relatorio + "&titulo=Relatorio";
                                 });
                                 ////////////////////////////////////
 
 
                                 function editarDados(id) {
+
                                     $.ajax({
                                         url: '../controller/mov_controller.php',
                                         type: 'POST',
@@ -400,12 +415,15 @@ if (!isLoggedIn()) {
                                         },
                                         dataType: 'json',
                                         success: function (response) {
+                                            console.log(response);
                                             $('#submit_btn').hide();
                                             $('#edit_btn').show();
                                             $('#label_modal').text('Editar');
+
                                             $('#name').val(response[0].nome);
                                             $('#description').val(response[0].descricao);
                                             $('#mov_id').val(response[0].id);
+
                                             $('#modal_cadastro').show();
                                         }
                                     });

@@ -16,15 +16,20 @@ if (isset($_POST['save'])) {
     saveMov();
 }
 
-//if (isset ($_POST['dados_movimentacao'])){
-//    dadosMovimentacao();
-//}
-//if (isset($_POST['remove'])) {
-//    removeSecao();
-//}
-//if (isset($_POST['get_edit_values'])){
-//    editSecao();
-//}
+if (isset ($_POST['edit'])){
+    editMov();
+}
+
+
+if (isset($_POST['remove'])) {
+    removeMov();
+}
+
+
+if (isset($_POST['get_edit_values'])){
+    getMovById();
+    
+}
 
 /**
  * Verificando se existe 'dados_grupo'
@@ -45,6 +50,13 @@ function getMov() {
     global $movDAO;
     $output = $movDAO->getMov($_POST);
 
+    echo json_encode($output);
+}
+
+function getMovById(){
+    global $movDAO;
+    $output = $movDAO->getMovById($_POST['id']);
+   
     echo json_encode($output);
 }
 
@@ -79,39 +91,46 @@ function saveMov() {
  * Função para editar os atricutos do movimentacao
  * @package controller
  */
-//function editSecao() {
-//    global $movDAO;
-//    $name = $_POST['name'];
-//    $description = $_POST['description'];
-//
-//
-//    if (isset($name) && isset($description) && isset($id)) {
-//
-//        $id = $movDAO->edit($name,$description,$id );
-// 
-//        $retorno = ($id >= 1 ? "Editado com sucesso!" : "Erro ao editar !");
-//        echo $retorno;
-//    }
-//    
-//    exit();
-//}
+function editMov() {
+    global $movDAO;
+    $produtos = $_POST['produtos'];
+    $description = $_POST['description'];
+    $id_secao = $_POST['id_secao'];
+
+
+    if (isset($produtos) && isset($description) && isset($id_secao)) {
+
+        $id = $movDAO->editMov($description, $id_secao);
+
+        if ($id) {
+            $ok = $movDAO->editMovProdutos($produtos, $id);
+        }
+
+        $retorno = ($ok ? "Editado com sucesso!" : "Erro ao editar!");
+    } else {
+        $retorno = "Erro ao editar produtos";
+    }
+    echo $retorno;
+    exit();
+    
+}
 /**
  * Função para remover a movimentacao 
  * @package controller
  */
-//function removeSecao() {
-//    global $movDAO;
-//    $id = $_POST['id'];
-//
-//    if (isset($id)) {
-//
-//        $ok = $movDAO->delete($id);
-// 
-//        $retorno = ($ok ? "Item $id deletado com sucesso!" : "Erro ao deletar!");
-//        echo $retorno;
-//    } 
-//    exit();
-//}
+function removeMov() {
+    global $movDAO;
+    $id = $_POST['id'];
+
+    if (isset($id)) {
+
+        $ok = $movDAO->delete($id);
+ 
+        $retorno = ($ok ? "Item $id deletado com sucesso!" : "Erro ao deletar!");
+        echo $retorno;
+    } 
+    exit();
+}
 
 /**
  * Função para recuperar do banco dados do movimentacao e retornar um json
