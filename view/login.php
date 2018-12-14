@@ -1,5 +1,15 @@
 
 <?php
+
+/*
+ *  @copyright  Copyright 2018 
+ *  @author Frederiko Cesar Moreira Ribeiro
+ *  @author Anna Lara Moraes Caixeta
+ *  @version 1
+ *  @link https://github.com/frederikocmr/controleestoque GitHub
+ */
+
+
 require_once "../dao/user_dao.php";
 include('../controller/user_controller.php');
 

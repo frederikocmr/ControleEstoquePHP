@@ -1,4 +1,14 @@
 <?php
+
+/*
+ *  @copyright  Copyright 2018 
+ *  @author Frederiko Cesar Moreira Ribeiro
+ *  @author Anna Lara Moraes Caixeta
+ *  @version 1
+ *  @link https://github.com/frederikocmr/controleestoque GitHub
+ */
+
+
 include("../dao/user_dao.php");
 include('../controller/user_controller.php');
 
@@ -294,7 +304,10 @@ if (!isLoggedIn()) {
                                         $('#some-element').children("#" + $(this).data("row-id")).remove();
                                     });
                                 });
-
+                        /**
+                        ** Função para remover
+                             * @package view
+                             */
                                 function removeProd(id) {
                                     // TERMINAR
                                     $elements.pop(id);
@@ -332,6 +345,10 @@ if (!isLoggedIn()) {
                                             'description': description,
                                             'id_secao': id_secao
                                         },
+                                        /**
+                        ** Função que retorna a resposta
+                             * @package view
+                             */
                                         success: function (response) {
                                             console.log(response);
                                             $('#id_secao').val('');
@@ -389,7 +406,10 @@ if (!isLoggedIn()) {
                                 });
                                 ////////////////////////////////////
 
-
+                        /**
+                        ** Função para editar dados
+                             * @package view
+                             */
                                 function editarDados(id) {
                                     $.ajax({
                                         url: '../controller/mov_controller.php',
@@ -411,7 +431,10 @@ if (!isLoggedIn()) {
                                     });
 
                                 }
-
+                         /**
+                        ** Função para remover dados
+                             * @package view
+                             */
                                 function removerDados(id) {
 
                                     $.ajax({
@@ -429,7 +452,10 @@ if (!isLoggedIn()) {
                                         }
                                     });
                                 }
-
+                          /**
+                        ** Função que retorna dados de seção 
+                             * @package view
+                             */
                                 function dadosSecao() {
                                     $.ajax({
                                         url: '../controller/mov_controller.php',
@@ -448,6 +474,10 @@ if (!isLoggedIn()) {
                                         }
                                     });
                                 }
+                         /**
+                        ** Função que retorna dados para gerar relatorio
+                             * @package view
+                             */
                                 function dadosRelatorio() {
                                     $.ajax({
                                         url: '../controller/mov_controller.php',

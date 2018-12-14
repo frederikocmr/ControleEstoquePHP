@@ -6,7 +6,10 @@ class Usuario
     private $email;
     private $senha;
     private $tipo;
- 
+ /**
+** Construtor
+* @package view
+*/
     public function __construct($nome, $email, $senha, $tipo)
     {
         $this->nome = $nome;

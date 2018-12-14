@@ -1,4 +1,14 @@
 <?php
+
+/*
+ *  @copyright  Copyright 2018 
+ *  @author Frederiko Cesar Moreira Ribeiro
+ *  @author Anna Lara Moraes Caixeta
+ *  @version 1
+ *  @link https://github.com/frederikocmr/controleestoque GitHub
+ */
+
+
 include("../dao/user_dao.php");
 include('../controller/user_controller.php');
 
@@ -295,7 +305,10 @@ if (!isAdmin()) {
                                     });
                                 });
 
-
+/                       **
+                        ** Função para editar dados
+                             * @package view
+                             */
                                 function editarDados(id) {
 
                                     $.ajax({
@@ -318,7 +331,10 @@ if (!isAdmin()) {
                                     });
 
                                 }
-
+                        /**
+                        ** Função para remover dados
+                             * @package view
+                             */
                                 function removerDados(id) {
 
                                     $.ajax({
